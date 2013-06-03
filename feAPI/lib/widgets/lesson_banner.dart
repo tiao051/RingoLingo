@@ -1,4 +1,3 @@
-// lesson_banner.dart
 import 'package:flutter/material.dart';
 
 class LessonBanner extends StatelessWidget {
@@ -17,19 +16,22 @@ class LessonBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double bannerWidth = MediaQuery.of(context).size.width * 0.6;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        width: bannerWidth,
         margin: const EdgeInsets.symmetric(vertical: 12),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.orangeAccent.shade100,
+          color: const Color(0xFFF2E9DE),
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
               color: Colors.orange.shade200.withOpacity(0.6),
               blurRadius: 8,
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -41,9 +43,15 @@ class LessonBanner extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text(
+                    title,
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 6),
-                  Text(description, style: TextStyle(fontSize: 16, color: Colors.black87)),
+                  Text(
+                    description,
+                    style: const TextStyle(fontSize: 16, color: Colors.black87),
+                  ),
                 ],
               ),
             ),

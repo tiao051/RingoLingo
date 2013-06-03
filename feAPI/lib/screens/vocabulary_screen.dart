@@ -6,8 +6,10 @@ import 'package:ringolingo_app/services/lesson_service.dart';
 import 'package:ringolingo_app/utils/color.dart';
 import 'package:ringolingo_app/utils/text_styles.dart';
 import 'package:ringolingo_app/widgets/left_sidebar.dart';
+import 'package:ringolingo_app/widgets/right_sidebar.dart';
 import 'package:ringolingo_app/widgets/lesson_card.dart';
 import 'package:ringolingo_app/widgets/skill_icon.dart';
+import 'package:ringolingo_app/widgets/lesson_banner.dart';
 
 class VocabularyScreen extends StatefulWidget {
   @override
@@ -17,14 +19,12 @@ class VocabularyScreen extends StatefulWidget {
 class _VocabularyScreenState extends State<VocabularyScreen> {
   late Future<List<Category>> futureCategories;
   Future<List<Lesson>>? futureLessons;
-
   String selectedSkill = 'Từ vựng';
 
   @override
   void initState() {
     super.initState();
     futureCategories = fetchCategories();
-    futureLessons = null;
   }
 
   void onSkillTap(String skill) {
@@ -32,7 +32,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       selectedSkill = skill;
       if (skill == 'Từ vựng') {
         futureCategories = fetchCategories();
-      } else if (skill == 'Kiểm tra') {
+      } else if (skill == 'Bài học') {
         futureLessons ??= fetchLessons();
       }
     });
@@ -60,14 +60,22 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            LeftSidebar(),
-            const SizedBox(width: 24),
+            /// LEFT SIDEBAR - 20%
             Expanded(
+              flex: 2,
+              child: LeftSidebar(),
+            ),
+
+            const SizedBox(width: 16),
+
+            /// MAIN CONTENT - 60%
+            Expanded(
+              flex: 6,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Search + Avatar
+                    /// SEARCH + AVATAR
                     Row(
                       children: [
                         Expanded(
@@ -78,29 +86,27 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                               borderRadius: BorderRadius.circular(50),
                               border: Border.all(color: AppColors.brownNormal),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 30),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.search, color: AppColors.brownDark),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: 'Tìm kiếm...',
-                                        border: InputBorder.none,
-                                        hintStyle: TextStyle(color: AppColors.brownDark),
-                                      ),
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: Row(
+                              children: [
+                                Icon(Icons.search, color: AppColors.brownDark),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      hintText: 'Tìm kiếm...',
+                                      border: InputBorder.none,
+                                      hintStyle: TextStyle(color: AppColors.brownDark),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                         const SizedBox(width: 24),
                         Container(
-                          width: 110,
+                          width: 80,
                           height: 80,
                           padding: const EdgeInsets.all(3),
                           decoration: BoxDecoration(
@@ -121,14 +127,13 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                       ],
                     ),
 
-                    const SizedBox(height: 41),
+                    const SizedBox(height: 32),
 
-                    // Skill Icons
+                    /// SKILL ICONS
                     SizedBox(
                       height: 170,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SkillIcon(
                             imagePath: 'assets/images/icon_tu_vung.png',
@@ -137,9 +142,9 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                           ),
                           SkillIcon(
                             imagePath: 'assets/images/icon_kiem_tra_1.png',
-                            title: 'Kiểm tra',
+                            title: 'Bài học',
                             iconSize: 120,
-                            onTap: () => onSkillTap('Kiểm tra'),
+                            onTap: () => onSkillTap('Bài học'),
                           ),
                           SkillIcon(
                             imagePath: 'assets/images/icon_trac_nghiem.png',
@@ -166,12 +171,12 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                       ),
                     ),
 
-                    const SizedBox(height: 41),
+                    const SizedBox(height: 32),
 
-                    // Content by Skill
+                    /// CONTENT AREA
                     if (selectedSkill == 'Từ vựng') ...[
                       Text('Từ vựng', style: AppTextStyles.head1Bold),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
                       FutureBuilder<List<Category>>(
                         future: futureCategories,
                         builder: (context, snapshot) {
@@ -193,32 +198,33 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                           }
                         },
                       ),
-                    ] else if (selectedSkill == 'Kiểm tra') ...[
-                      Text('Kiểm tra', style: AppTextStyles.head1Bold),
-                      const SizedBox(height: 30),
-                      futureLessons == null
-                          ? Center(child: Text('Đang tải dữ liệu...'))
-                          : FutureBuilder<List<Lesson>>(
-                              future: futureLessons,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return Center(child: CircularProgressIndicator());
-                                } else if (snapshot.hasError) {
-                                  return Text('Lỗi: ${snapshot.error}');
-                                } else {
-                                  final lessons = snapshot.data!;
-                                  return Column(
-                                    children: lessons.map((lesson) {
-                                      return LessonCard(
-                                        title: lesson.title,
-                                        description: lesson.description ?? '',
-                                        imagePath: 'assets/images/icon_trac_nghiem.png',
-                                      );
-                                    }).toList(),
-                                  );
-                                }
-                              },
-                            ),
+                    ] else if (selectedSkill == 'Bài học') ...[
+                      Text('Bài học', style: AppTextStyles.head1Bold),
+                      const SizedBox(height: 20),
+                      FutureBuilder<List<Lesson>>(
+                        future: futureLessons,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Text('Lỗi: ${snapshot.error}');
+                          } else {
+                            final lessons = snapshot.data!;
+                            return Column(
+                              children: lessons.map((lesson) {
+                                return LessonBanner(
+                                  title: lesson.title,
+                                  description: lesson.description,
+                                  imagePath: 'assets/images/icon_trac_nghiem.png',
+                                  onTap: () {
+                                    print('Đã bấm vào lesson id: ${lesson.id}');
+                                  },
+                                );
+                              }).toList(),
+                            );
+                          }
+                        },
+                      ),
                     ] else ...[
                       Text('Đang chọn: $selectedSkill', style: AppTextStyles.head1Bold),
                       const SizedBox(height: 20),
@@ -228,7 +234,14 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                 ),
               ),
             ),
-            const SizedBox(width: 24),
+
+            const SizedBox(width: 16),
+
+            /// RIGHT SIDEBAR - 20%
+            Expanded(
+              flex: 2,
+              child: RightSidebar(),
+            ),
           ],
         ),
       ),

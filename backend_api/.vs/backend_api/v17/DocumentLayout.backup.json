@@ -317,8 +317,7 @@
               "RelativeToolTip": "AppTiengAnhBE\\Controllers\\AccountControlles\\SignUpController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T16:42:32.264Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-31T16:42:32.264Z"
             },
             {
               "$type": "Document",
@@ -330,8 +329,7 @@
               "RelativeToolTip": "AppTiengAnhBE\\Controllers\\CategoriesControllers\\CategoryController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T16:45:15.522Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-31T16:45:15.522Z"
             },
             {
               "$type": "Document",
@@ -341,7 +339,7 @@
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonController.cs",
               "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonController.cs",
               "RelativeToolTip": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAcwBEAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAmwBYAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-26T18:09:35.979Z",
               "EditorCaption": ""
@@ -356,8 +354,7 @@
               "RelativeToolTip": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAA4wDcAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T17:39:40.339Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-27T17:39:40.339Z"
             },
             {
               "$type": "Document",
@@ -369,8 +366,7 @@
               "RelativeToolTip": "AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
               "ViewState": "AgIAACYAAAAAAAAAAAAUwDgAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T17:49:03.308Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-27T17:49:03.308Z"
             },
             {
               "$type": "Document",
@@ -406,8 +402,7 @@
               "RelativeToolTip": "AppTiengAnhBE\\Models\\DTOs\\SignUpDTO\\SignUpRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T18:29:48.311Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-31T18:29:48.311Z"
             },
             {
               "$type": "Document",
@@ -419,8 +414,7 @@
               "RelativeToolTip": "AppTiengAnhBE\\Controllers\\AccountControlles\\LoginController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T16:42:48.436Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-31T16:42:48.436Z"
             },
             {
               "$type": "Document",
@@ -432,8 +426,7 @@
               "RelativeToolTip": "AppTiengAnhBE\\Repositories\\CategoryServices\\CategoriesCRUDRepo\\CategoryRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T18:44:14.669Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-26T18:44:14.669Z"
             },
             {
               "$type": "Document",
@@ -445,8 +438,7 @@
               "RelativeToolTip": "AppTiengAnhBE\\Services\\CategoryServices\\CategoriesCRUDServices\\CategoryService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T18:42:23.948Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-26T18:42:23.948Z"
             },
             {
               "$type": "Document",
