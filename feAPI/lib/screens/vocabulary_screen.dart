@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ringolingo_app/models/category.dart';
+import 'package:ringolingo_app/models/lesson.dart';
+import 'package:ringolingo_app/services/category_service.dart';
+import 'package:ringolingo_app/services/lesson_service.dart';
 import 'package:ringolingo_app/utils/color.dart';
 import 'package:ringolingo_app/utils/text_styles.dart';
 import 'package:ringolingo_app/widgets/left_sidebar.dart';
 import 'package:ringolingo_app/widgets/lesson_card.dart';
 import 'package:ringolingo_app/widgets/skill_icon.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class VocabularyScreen extends StatefulWidget {
   @override
@@ -15,22 +16,26 @@ class VocabularyScreen extends StatefulWidget {
 
 class _VocabularyScreenState extends State<VocabularyScreen> {
   late Future<List<Category>> futureCategories;
+  Future<List<Lesson>>? futureLessons;
+
+  String selectedSkill = 'Từ vựng';
 
   @override
   void initState() {
     super.initState();
-    futureCategories = fetchLessons();
+    futureCategories = fetchCategories();
+    futureLessons = null;
   }
 
-  Future<List<Category>> fetchLessons() async {
-    final response = await http.get(Uri.parse('https://localhost:7093/api/category'));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      return data.map((json) => Category.fromJson(json)).toList();
-    } else {
-      throw Exception('Failed to load Category');
-    }
+  void onSkillTap(String skill) {
+    setState(() {
+      selectedSkill = skill;
+      if (skill == 'Từ vựng') {
+        futureCategories = fetchCategories();
+      } else if (skill == 'Kiểm tra') {
+        futureLessons ??= fetchLessons();
+      }
+    });
   }
 
   String getImageForCategory(int id) {
@@ -62,7 +67,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Search and flag
+                    // Search + Avatar
                     Row(
                       children: [
                         Expanded(
@@ -124,44 +129,101 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          SkillIcon(imagePath: 'assets/images/icon_tu_vung.png', title: 'Từ vựng'),
-                          SkillIcon(imagePath: 'assets/images/icon_kiem_tra_1.png', title: 'Kiểm tra', iconSize: 120),
-                          SkillIcon(imagePath: 'assets/images/icon_trac_nghiem.png', title: 'Trắc nghiệm'),
-                          SkillIcon(imagePath: 'assets/images/icon_luyen_nghe.png', title: 'Luyện nghe'),
-                          SkillIcon(imagePath: 'assets/images/icon_noi_tu.png', title: 'Điền từ'),
-                          SkillIcon(imagePath: 'assets/images/icon_dung_sai.png', title: 'Đúng/Sai', iconSize: 90),
+                        children: [
+                          SkillIcon(
+                            imagePath: 'assets/images/icon_tu_vung.png',
+                            title: 'Từ vựng',
+                            onTap: () => onSkillTap('Từ vựng'),
+                          ),
+                          SkillIcon(
+                            imagePath: 'assets/images/icon_kiem_tra_1.png',
+                            title: 'Kiểm tra',
+                            iconSize: 120,
+                            onTap: () => onSkillTap('Kiểm tra'),
+                          ),
+                          SkillIcon(
+                            imagePath: 'assets/images/icon_trac_nghiem.png',
+                            title: 'Trắc nghiệm',
+                            onTap: () => onSkillTap('Trắc nghiệm'),
+                          ),
+                          SkillIcon(
+                            imagePath: 'assets/images/icon_luyen_nghe.png',
+                            title: 'Luyện nghe',
+                            onTap: () => onSkillTap('Luyện nghe'),
+                          ),
+                          SkillIcon(
+                            imagePath: 'assets/images/icon_noi_tu.png',
+                            title: 'Điền từ',
+                            onTap: () => onSkillTap('Điền từ'),
+                          ),
+                          SkillIcon(
+                            imagePath: 'assets/images/icon_dung_sai.png',
+                            title: 'Đúng/Sai',
+                            iconSize: 90,
+                            onTap: () => onSkillTap('Đúng/Sai'),
+                          ),
                         ],
                       ),
                     ),
 
                     const SizedBox(height: 41),
 
-                    Text('Từ vựng', style: AppTextStyles.head1Bold),
-
-                    const SizedBox(height: 30),
-
-                    FutureBuilder<List<Category>>(
-                      future: futureCategories,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          return Text('Lỗi: ${snapshot.error}');
-                        } else {
-                          final categories = snapshot.data!;
-                          return Column(
-                            children: categories.map((category) {
-                              return LessonCard(
-                                title: category.name,
-                                description: category.description,
-                                imagePath: getImageForCategory(category.id),
-                              );
-                            }).toList(),
-                          );
-                        }
-                      },
-                    ),
+                    // Content by Skill
+                    if (selectedSkill == 'Từ vựng') ...[
+                      Text('Từ vựng', style: AppTextStyles.head1Bold),
+                      const SizedBox(height: 30),
+                      FutureBuilder<List<Category>>(
+                        future: futureCategories,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Text('Lỗi: ${snapshot.error}');
+                          } else {
+                            final categories = snapshot.data!;
+                            return Column(
+                              children: categories.map((category) {
+                                return LessonCard(
+                                  title: category.name,
+                                  description: category.description,
+                                  imagePath: getImageForCategory(category.id),
+                                );
+                              }).toList(),
+                            );
+                          }
+                        },
+                      ),
+                    ] else if (selectedSkill == 'Kiểm tra') ...[
+                      Text('Kiểm tra', style: AppTextStyles.head1Bold),
+                      const SizedBox(height: 30),
+                      futureLessons == null
+                          ? Center(child: Text('Đang tải dữ liệu...'))
+                          : FutureBuilder<List<Lesson>>(
+                              future: futureLessons,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return Center(child: CircularProgressIndicator());
+                                } else if (snapshot.hasError) {
+                                  return Text('Lỗi: ${snapshot.error}');
+                                } else {
+                                  final lessons = snapshot.data!;
+                                  return Column(
+                                    children: lessons.map((lesson) {
+                                      return LessonCard(
+                                        title: lesson.title,
+                                        description: lesson.description ?? '',
+                                        imagePath: 'assets/images/icon_trac_nghiem.png',
+                                      );
+                                    }).toList(),
+                                  );
+                                }
+                              },
+                            ),
+                    ] else ...[
+                      Text('Đang chọn: $selectedSkill', style: AppTextStyles.head1Bold),
+                      const SizedBox(height: 20),
+                      Text('Chức năng "$selectedSkill" chưa được cài đặt.', style: AppTextStyles.head3Black),
+                    ],
                   ],
                 ),
               ),

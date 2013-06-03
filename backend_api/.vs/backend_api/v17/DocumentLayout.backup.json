@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "D:\\RingoLingo\\backend_api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\repositories\\categoryservices\\categoriescrudrepo\\categoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\repositories\\categoryservices\\categoriescrudrepo\\categoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\controllers\\lessonscontrollers\\lessoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\lessonscontrollers\\lessoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\controllers\\lessonscontrollers\\lessonresultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\lessonscontrollers\\lessonresultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\controllers\\categoriescontrollers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\categoriescontrollers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\services\\categoryservices\\categoriescrudservices\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\services\\categoryservices\\categoriescrudservices\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\repositories\\categoryservices\\categoriescrudrepo\\categoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\repositories\\categoryservices\\categoriescrudrepo\\categoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\models\\dtos\\signupdto\\signuprequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\repositories\\lessonrepository\\lessonresults\\lessonresultrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\repositories\\lessonrepository\\lessonresults\\lessonresultrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\controllers\\lessonscontrollers\\lessonresultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\lessonscontrollers\\lessonresultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\controllers\\questionscontrollers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -167,10 +175,6 @@
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\models\\dtos\\lessondto\\submitrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\controllers\\lessonscontrollers\\lessoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\lessonscontrollers\\lessoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\models\\dtos\\worddto\\worddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\models\\dtos\\worddto\\worddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -223,10 +227,6 @@
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\apptienganhbe.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\services\\categoryservices\\categoriescrudservices\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\services\\categoryservices\\categoriescrudservices\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\ringolingo\\backend_api\\apptienganhbe\\services\\reminderscrudservices\\reminderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\services\\reminderscrudservices\\reminderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -269,7 +269,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 17,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -309,20 +309,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "LessonResultService.cs",
-              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
-              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAUwDgAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T17:49:03.308Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "SignUpController.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\AccountControlles\\SignUpController.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\AccountControlles\\SignUpController.cs",
@@ -335,19 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "QuestionController.cs",
-              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
-              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T13:11:48.445Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "CategoryController.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\CategoriesControllers\\CategoryController.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\CategoriesControllers\\CategoryController.cs",
@@ -360,19 +335,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "LoginRequest.cs",
-              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
-              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAkAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "LessonController.cs",
+              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonController.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonController.cs",
+              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonController.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAcwBEAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T17:03:08.106Z"
+              "WhenOpened": "2025-05-26T18:09:35.979Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 1,
+              "Title": "LessonResultsController.cs",
+              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
+              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA4wDcAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T17:39:40.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "LessonResultService.cs",
+              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
+              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAUwDgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T17:49:03.308Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Program.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Program.cs",
@@ -384,7 +386,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 11,
+              "Title": "LoginRequest.cs",
+              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
+              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-31T17:03:08.106Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "SignUpRequest.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\SignUpDTO\\SignUpRequest.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\SignUpDTO\\SignUpRequest.cs",
@@ -397,7 +411,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "LoginController.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\AccountControlles\\LoginController.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\AccountControlles\\LoginController.cs",
@@ -410,20 +424,45 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "CategoryRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\CategoryServices\\CategoriesCRUDRepo\\CategoryRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\CategoryServices\\CategoriesCRUDRepo\\CategoryRepository.cs",
-              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\CategoryServices\\CategoriesCRUDRepo\\CategoryRepository.cs*",
-              "RelativeToolTip": "AppTiengAnhBE\\Repositories\\CategoryServices\\CategoriesCRUDRepo\\CategoryRepository.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
+              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\CategoryServices\\CategoriesCRUDRepo\\CategoryRepository.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Repositories\\CategoryServices\\CategoriesCRUDRepo\\CategoryRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-26T18:44:14.669Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
+              "Title": "CategoryService.cs",
+              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\CategoryServices\\CategoriesCRUDServices\\CategoryService.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\CategoryServices\\CategoriesCRUDServices\\CategoryService.cs",
+              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\CategoryServices\\CategoriesCRUDServices\\CategoryService.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Services\\CategoryServices\\CategoriesCRUDServices\\CategoryService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T18:42:23.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "QuestionController.cs",
+              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
+              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T13:11:48.445Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "LessonResultRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\LessonResultRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\LessonResultRepository.cs",
@@ -435,19 +474,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "LessonResultsController.cs",
-              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
-              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAkwDcAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T17:39:40.339Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\UserRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\UserRepository.cs",
@@ -459,7 +486,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "User.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\SystemModel\\User.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\SystemModel\\User.cs",
@@ -471,7 +498,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "AuthService.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\AuthServices\\AuthService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\AuthServices\\AuthService.cs",
@@ -483,7 +510,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\AuthServices\\IAuthService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\AuthServices\\IAuthService.cs",
@@ -495,7 +522,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "UserService.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\UserServices\\UserCRUDServices\\UserService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\UserServices\\UserCRUDServices\\UserService.cs",
@@ -507,7 +534,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "IUserService.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\UserServices\\UserCRUDServices\\IUserService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\UserServices\\UserCRUDServices\\IUserService.cs",
@@ -519,7 +546,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\IUserRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\IUserRepository.cs",
@@ -531,7 +558,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "UserController.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\UsersControllers\\UserController.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\UsersControllers\\UserController.cs",
@@ -543,7 +570,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "ReminderRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\RemindersCRUDRepo\\ReminderRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\RemindersCRUDRepo\\ReminderRepository.cs",
@@ -555,7 +582,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "IUserQuestionAnswerService.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\UserServices\\UserQuestionAnswers\\IUserQuestionAnswerService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\UserServices\\UserQuestionAnswers\\IUserQuestionAnswerService.cs",
@@ -567,7 +594,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\appsettings.Development.json",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\appsettings.Development.json",
@@ -579,7 +606,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "LoginResponse.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginResponse.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginResponse.cs",
@@ -591,7 +618,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 25,
               "Title": "JwtSettings.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\SystemModel\\JwtSettings.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\SystemModel\\JwtSettings.cs",
@@ -603,7 +630,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "UserQuestionAnswerRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\UserRepository\\UserQuestionAnswers\\UserQuestionAnswerRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\UserRepository\\UserQuestionAnswers\\UserQuestionAnswerRepository.cs",
@@ -615,7 +642,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 28,
               "Title": "RefreshTokenResponse.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\RefreshTokenResponse.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\RefreshTokenResponse.cs",
@@ -627,7 +654,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 29,
               "Title": "RefreshTokenRequest.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\RefreshTokenRequest.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\RefreshTokenRequest.cs",
@@ -639,7 +666,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 26,
               "Title": "Lesson.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\SystemModel\\Lesson.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\SystemModel\\Lesson.cs",
@@ -651,7 +678,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
               "Title": "IUserQuestionAnswerRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\UserRepository\\UserQuestionAnswers\\IUserQuestionAnswerRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\UserRepository\\UserQuestionAnswers\\IUserQuestionAnswerRepository.cs",
@@ -663,7 +690,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 31,
               "Title": "UserQuestionAnswerService.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\UserServices\\UserQuestionAnswers\\UserQuestionAnswerService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\UserServices\\UserQuestionAnswers\\UserQuestionAnswerService.cs",
@@ -675,7 +702,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "ILessonResultRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\ILessonResultRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\ILessonResultRepository.cs",
@@ -687,7 +714,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "QuestionRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\QuestionRepo\\QuestionRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\QuestionRepo\\QuestionRepository.cs",
@@ -699,7 +726,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 35,
               "Title": "ILessonResultService.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\ILessonResultService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\ILessonResultService.cs",
@@ -711,7 +738,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 34,
               "Title": "QuestionService.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\QuestionServices\\QuestionService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\QuestionServices\\QuestionService.cs",
@@ -723,7 +750,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 36,
               "Title": "IQuestionService.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\QuestionServices\\IQuestionService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\QuestionServices\\IQuestionService.cs",
@@ -735,7 +762,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 37,
               "Title": "IQuestionRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\QuestionRepo\\IQuestionRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\QuestionRepo\\IQuestionRepository.cs",
@@ -747,7 +774,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 38,
               "Title": "QuestionDTO.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\QuestionDTO\\QuestionDTO.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\QuestionDTO\\QuestionDTO.cs",
@@ -759,7 +786,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 39,
               "Title": "AnswerDTO.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\QuestionDTO\\AnswerDTO.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\QuestionDTO\\AnswerDTO.cs",
@@ -771,7 +798,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 40,
               "Title": "UserLessonResult.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\UserLessonResultDTO\\UserLessonResult.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\UserLessonResultDTO\\UserLessonResult.cs",
@@ -783,7 +810,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 41,
               "Title": "WordRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\WordRepo\\WordRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\WordRepo\\WordRepository.cs",
@@ -795,7 +822,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 42,
               "Title": "SubmitRequest.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LessonDTO\\SubmitRequest.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LessonDTO\\SubmitRequest.cs",
@@ -807,19 +834,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
-              "Title": "LessonController.cs",
-              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonController.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonController.cs",
-              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonController.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAuwBEAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T18:09:35.979Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "WordDTO.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\WordDTO\\WordDTO.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\WordDTO\\WordDTO.cs",
@@ -831,7 +846,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 44,
               "Title": "WordsController.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\WordsControllers\\WordsController.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\WordsControllers\\WordsController.cs",
@@ -843,7 +858,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "IWordRepository.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Repositories\\WordRepo\\IWordRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\WordRepo\\IWordRepository.cs",
@@ -855,7 +870,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "WordService.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\WordServices\\WordService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\WordServices\\WordService.cs",
@@ -867,7 +882,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "IWordService.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\WordServices\\IWordService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\WordServices\\IWordService.cs",
@@ -879,7 +894,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 49,
               "Title": "AnswerRequest.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LessonDTO\\AnswerRequest.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LessonDTO\\AnswerRequest.cs",
@@ -891,7 +906,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "Category.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\SystemModel\\Category.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\SystemModel\\Category.cs",
@@ -903,7 +918,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 51,
               "Title": "Reminder.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\SystemModel\\Reminder.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\SystemModel\\Reminder.cs",
@@ -915,7 +930,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 52,
               "Title": "UserExerciseAnswer.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\UserAnswerDTO\\UserExerciseAnswer.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\UserAnswerDTO\\UserExerciseAnswer.cs",
@@ -927,7 +942,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 48,
               "Title": "UserAnswerDetail.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\UserAnswerDTO\\UserAnswerDetail.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\UserAnswerDTO\\UserAnswerDetail.cs",
@@ -939,7 +954,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 53,
               "Title": "SubmitResult.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LessonDTO\\SubmitResult.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LessonDTO\\SubmitResult.cs",
@@ -951,7 +966,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 54,
               "Title": "ReminderController.cs",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Controllers\\RemindersControllers\\ReminderController.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\RemindersControllers\\ReminderController.cs",
@@ -974,7 +989,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 55,
               "Title": "AppTiengAnhBE.http",
               "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\AppTiengAnhBE.http",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\AppTiengAnhBE.http",
@@ -983,18 +998,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
               "WhenOpened": "2025-05-27T19:14:02.248Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 55,
-              "Title": "CategoryService.cs",
-              "DocumentMoniker": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\CategoryServices\\CategoriesCRUDServices\\CategoryService.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\CategoryServices\\CategoriesCRUDServices\\CategoryService.cs",
-              "ToolTip": "D:\\RingoLingo\\backend_api\\AppTiengAnhBE\\Services\\CategoryServices\\CategoriesCRUDServices\\CategoryService.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Services\\CategoryServices\\CategoriesCRUDServices\\CategoryService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T18:42:23.948Z"
             },
             {
               "$type": "Document",
