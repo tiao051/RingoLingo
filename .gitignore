@@ -8,6 +8,8 @@ obj/
 .idea/
 
 ## Visual Studio Code
+.vs/
+
 .vscode/
 
 ## ASP.NET Core secrets

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'screens/register.dart';
-import 'screens/home_page.dart'; // Import the new home_page.dart
+import 'screens/home_page.dart'; 
 import 'screens/login.dart';
-import 'screens/hocTuVung.dart'; // Import the login screen
+import 'screens/vocabulary_screen.dart';
 
 void main() {
   runApp(const RingoLingoApp());
@@ -17,15 +17,15 @@ class RingoLingoApp extends StatelessWidget {
       title: 'RingoLingo',
       theme: ThemeData(
         primarySwatch: Colors.red,
-        fontFamily: 'Inter', // Changed to Inter to match the design
+        fontFamily: 'Inter', 
       ),
-      home: LoginScreen(), // Changed to RegisterPage
+      home: VocabularyScreen(),
       debugShowCheckedModeBanner: false,
       routes: {
         '/home': (context) => const HomePage(),
         '/register': (context) => RegisterPage(),
         '/login': (context) => const LoginScreen(),
-        '/hocTuVung': (context) => const HocTuVungSidebar(),
+        '/home_word': (context) => VocabularyScreen(),
       },
     );
   }

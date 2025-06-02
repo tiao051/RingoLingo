@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -13,6 +15,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,6 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Hình ảnh trang trí (ẩn nếu màn nhỏ)
                 if (screenWidth > 900)
                   Flexible(
                     flex: 1,
@@ -42,8 +44,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 const SizedBox(width: 40),
-
-                // Form đăng ký
                 Flexible(
                   flex: 1,
                   child: Container(
@@ -58,7 +58,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Image.asset('assets/images/title_logo.png', width: 50, height: 34),
                         const SizedBox(height: 20),
-
                         const Text(
                           'Đăng Ký',
                           style: TextStyle(
@@ -69,7 +68,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         const SizedBox(height: 30),
-
                         _buildInputField('Tên đăng nhập', _usernameController),
                         const SizedBox(height: 10),
                         _buildInputField('Email', _emailController),
@@ -78,14 +76,29 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(height: 10),
                         _buildInputField('Xác nhận mật khẩu', _confirmPasswordController, isConfirmPassword: true),
                         const SizedBox(height: 20),
-
                         _buildRegisterButton(),
-
                         const SizedBox(height: 20),
                         const Text('Hoặc', style: TextStyle(fontSize: 18)),
                         const SizedBox(height: 20),
-
                         _buildSocialButtons(),
+                        const SizedBox(height: 20),
+                        MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/login');
+                            },
+                            child: Text(
+                              'Bạn đã có tài khoản? Đăng nhập',
+                              style: TextStyle(
+                                color: Color(0xFFAF1515),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -153,24 +166,32 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _buildRegisterButton() {
-    return GestureDetector(
-      onTap: () {
-        print('Register button tapped');
-      },
-      child: Container(
-        width: double.infinity,
-        height: 44,
-        decoration: BoxDecoration(
-          color: const Color(0xFFAF1515),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: const Center(
-          child: Text(
-            'Đăng ký',
-            style: TextStyle(
-              fontSize: 20,
-              color: Color(0xFFF2E9DE),
-            ),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: _isLoading ? null : _onRegisterTap,
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 250),
+          width: double.infinity,
+          height: 44,
+          decoration: BoxDecoration(
+            color: _isLoading ? Colors.red.shade300 : const Color(0xFFAF1515),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Center(
+            child: _isLoading
+                ? const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(color: Color(0xFFF2E9DE), strokeWidth: 3),
+                  )
+                : const Text(
+                    'Đăng ký',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xFFF2E9DE),
+                    ),
+                  ),
           ),
         ),
       ),
@@ -192,22 +213,186 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _socialButton(String title) {
-    return GestureDetector(
-      onTap: () {
-        print('$title login tapped');
-      },
-      child: Container(
-        height: 44,
-        decoration: BoxDecoration(
-          color: const Color(0xFFD5B893),
-          borderRadius: BorderRadius.circular(20),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          print('$title login tapped');
+        },
+        child: Container(
+          height: 44,
+          decoration: BoxDecoration(
+            color: const Color(0xFFD5B893),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Center(
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+              ),
+            ),
+          ),
         ),
-        child: Center(
+      ),
+    );
+  }
+
+  void _onRegisterTap() async {
+  final username = _usernameController.text.trim();
+  final email = _emailController.text.trim();
+  final password = _passwordController.text;
+  final confirmPassword = _confirmPasswordController.text;
+
+  final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+  final hasSpaceInPassword = password.contains(' ');
+
+  // Kiểm tra từng trường xem có trống không
+  List<String> missingFields = [];
+  if (username.isEmpty) missingFields.add('username');
+  if (email.isEmpty) missingFields.add('email');
+  if (password.isEmpty) missingFields.add('password');
+  if (confirmPassword.isEmpty) missingFields.add('confirmPassword');
+
+  // Kiểm tra yêu cầu riêng biệt theo thứ tự ưu tiên
+  if (missingFields.length > 1) {
+    _showFloatingMessage('Vui lòng nhập đầy đủ thông tin!');
+    return;
+  } else if (missingFields.length == 1) {
+    switch (missingFields.first) {
+      case 'username':
+        _showFloatingMessage('Vui lòng nhập tên đăng nhập!');
+        return;
+      case 'email':
+        _showFloatingMessage('Vui lòng nhập email!');
+        return;
+      case 'password':
+        _showFloatingMessage('Vui lòng nhập mật khẩu!');
+        return;
+      case 'confirmPassword':
+        _showFloatingMessage('Vui lòng xác nhận lại mật khẩu!');
+        return;
+    }
+  }
+
+  // Kiểm tra tên đăng nhập >= 4 ký tự
+  if (username.length < 4) {
+    _showFloatingMessage('Tên đăng nhập phải từ 4 ký tự trở lên');
+    return;
+  }
+
+  // Kiểm tra email hợp lệ
+  if (!emailRegex.hasMatch(email)) {
+    _showFloatingMessage('Email không hợp lệ');
+    return;
+  }
+
+  // Kiểm tra password không chứa dấu cách
+  if (hasSpaceInPassword) {
+    _showFloatingMessage('Mật khẩu không được chứa dấu cách');
+    return;
+  }
+
+  // Kiểm tra password và confirm password phải giống nhau
+  if (password != confirmPassword) {
+    _showFloatingMessage('Xác nhận mật khẩu không đúng');
+    return;
+  }
+
+  setState(() {
+    _isLoading = true;
+  });
+
+  try {
+    final response = await http.post(
+      Uri.parse('https://localhost:7093/api/signup/register'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'Username': username,
+        'Email': email,
+        'Password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      _showFloatingMessage('Đăng ký thành công!', isError: false);
+      // Ví dụ chuyển sang trang đăng nhập
+      Navigator.of(context).pushNamed('/login');
+    } else {
+      _showFloatingMessage('Đăng ký thất bại!');
+    }
+  } catch (e) {
+    _showFloatingMessage('Lỗi kết nối đến server');
+  } finally {
+    setState(() {
+      _isLoading = false;
+    });
+  }
+}
+
+  void _showFloatingMessage(String message, {bool isError = true}) {
+    final overlay = Overlay.of(context);
+
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 60,
+        left: 0,
+        right: 0,
+        child: FloatingNotification(
+          message: message,
+          backgroundColor: isError ? Colors.red : Colors.green,
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
+}
+
+class FloatingNotification extends StatelessWidget {
+  final String message;
+  final Color backgroundColor;
+
+  const FloatingNotification({
+    Key? key,
+    required this.message,
+    required this.backgroundColor,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: Container(
+          margin: const EdgeInsets.only(top: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
+          constraints: const BoxConstraints(
+            maxWidth: 400,
+          ),
           child: Text(
-            title,
+            message,
+            textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 18,
               color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

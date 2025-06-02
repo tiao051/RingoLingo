@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
           // Header
           _buildHeader(),
           // Hero Section
-          _buildHeroSection(),
+          _buildHeroSection(context),
           // Language Selection
           _buildLanguageSelection(),
           // Features Section
@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeroSection() {
+  Widget _buildHeroSection(BuildContext context) {
   return Container(
     height: 500,
     decoration: const BoxDecoration(
@@ -144,7 +144,9 @@ class HomePage extends StatelessWidget {
                       Row(
                         children: [
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/login');
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFFD32F2F),
                               foregroundColor: Colors.white,
@@ -368,43 +370,47 @@ Widget _buildSkillsSection() {
  );
 }
 
-  Widget _buildSkillCard(String title, String description, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFFCDD2),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            icon,
-            size: 32,
-            color: const Color(0xFFD32F2F),
+ Widget _buildSkillCard(String title, String subtitle, IconData icon) {
+  return Container(
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(16),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.2),
+          blurRadius: 8,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, size: 40, color: const Color(0xFFD32F2F)),
+        const SizedBox(height: 12),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFFD32F2F),
           ),
-          const SizedBox(height: 10),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFD32F2F),
-            ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          subtitle,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Colors.black54,
+            height: 1.4,
           ),
-          const SizedBox(height: 8),
-          Text(
-            description,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.black54,
-              height: 1.4,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
   
   Widget _buildFooter() {
     return Container(
