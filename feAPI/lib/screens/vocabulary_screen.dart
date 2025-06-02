@@ -1,186 +1,172 @@
 import 'package:flutter/material.dart';
+import 'package:ringolingo_app/models/category.dart';
 import 'package:ringolingo_app/utils/color.dart';
-import '../utils/text_styles.dart';
-import '../widgets/left_sidebar.dart';
-import '../widgets/lesson_card.dart';
-import '../widgets/skill_icon.dart';
+import 'package:ringolingo_app/utils/text_styles.dart';
+import 'package:ringolingo_app/widgets/left_sidebar.dart';
+import 'package:ringolingo_app/widgets/lesson_card.dart';
+import 'package:ringolingo_app/widgets/skill_icon.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class VocabularyScreen extends StatelessWidget {
+class VocabularyScreen extends StatefulWidget {
+  @override
+  _VocabularyScreenState createState() => _VocabularyScreenState();
+}
+
+class _VocabularyScreenState extends State<VocabularyScreen> {
+  late Future<List<Category>> futureCategories;
+
+  @override
+  void initState() {
+    super.initState();
+    futureCategories = fetchLessons();
+  }
+
+  Future<List<Category>> fetchLessons() async {
+    final response = await http.get(Uri.parse('https://localhost:7093/api/category'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => Category.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load Category');
+    }
+  }
+
+  String getImageForCategory(int id) {
+    switch (id) {
+      case 1:
+        return 'assets/images/icon_chu_de_2.png';
+      case 2:
+        return 'assets/images/icon_chu_de_3.png';
+      case 3:
+        return 'assets/images/icon_chu_de_1.png';
+      default:
+        return 'assets/images/default_icon.png';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: const Color(0xFFD5B893),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Left Sidebar
             LeftSidebar(),
-            
-            SizedBox(width: 24),
-            
-            // Main Content
+            const SizedBox(width: 24),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Header with search bar and flag
-                  Row(
-                    children: [
-                      // Search bar
-                      Expanded(
-                        child: Container(
-                          height: 83,
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(50),
-                            border: Border.all(color: AppColors.brownNormal),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 30),
-                            child: Row(
-                              children: [
-                                Icon(Icons.search, color: AppColors.brownDark),
-                                SizedBox(width: 16),
-                                Expanded(
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      hintText: 'Tìm kiếm...',
-                                      border: InputBorder.none,
-                                      hintStyle: TextStyle(color: AppColors.brownDark),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      
-                      SizedBox(width: 24),
-                      
-                      // Flag/Language selector
-                      Container(
-                        width: 130,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          color: AppColors.brownNormal,
-                          borderRadius: BorderRadius.circular(23),
-                        ),
-                        child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Search and flag
+                    Row(
+                      children: [
+                        Expanded(
                           child: Container(
-                            width: 60,
-                            height: 40,
+                            height: 83,
                             decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(5),
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(50),
+                              border: Border.all(color: AppColors.brownNormal),
                             ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Container(color: Colors.red),
-                                ),
-                                Container(
-                                  width: 20,
-                                  child: Column(
-                                    children: List.generate(13, (index) => 
-                                      Expanded(
-                                        child: Container(
-                                          color: index % 2 == 0 ? Colors.red : Colors.white,
-                                        ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 30),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.search, color: AppColors.brownDark),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        hintText: 'Tìm kiếm...',
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(color: AppColors.brownDark),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  width: 20,
-                                  color: Colors.blue,
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: List.generate(9, (index) => 
-                                        Icon(Icons.star, color: Colors.white, size: 3),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  
-                  SizedBox(height: 41),
-                  
-                  // Skills Icons Row
-                 Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SkillIcon(imagePath: 'assets/images/icon_tu_vung.png', title: 'Từ vựng'),
-                      SkillIcon(
-                        imagePath: 'assets/images/icon_kiem_tra_1.png', 
-                        title: 'Kiểm tra',
-                        width: 130,
-                        height: 260,
-                        iconSize: 60,
-                      ),
-                      SkillIcon(imagePath: 'assets/images/icon_trac_nghiem.png', title: 'Trắc nghiệm'),
-                      SkillIcon(imagePath: 'assets/images/icon_luyen_nghe.png', title: 'Luyện nghe'),
-                      SkillIcon(imagePath: 'assets/images/icon_noi_tu.png', title: 'Nối từ'),
-                      SkillIcon(imagePath: 'assets/images/icon_dien_tu.png', title: 'Điền từ'),
-                      SkillIcon(
-                        imagePath: 'assets/images/icon_dung_sai.png', 
-                        title: 'Đúng/Sai',
-                        width: 100,
-                        height: 270,
-                        iconSize: 80,
-                      ),
-                    ],
-                  ),
+                        const SizedBox(width: 24),
+                        Container(
+                          width: 110,
+                          height: 80,
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 212, 221, 80),
+                            borderRadius: BorderRadius.circular(23),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(18),
+                            child: Container(
+                              color: const Color.fromARGB(255, 218, 145, 145),
+                              child: Image.asset(
+                                'assets/images/coAnh.png',
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
 
+                    const SizedBox(height: 41),
 
-                  SizedBox(height: 41),
-                  
-                  // Vocabulary Title
-                  Text(
-                    'Từ vựng',
-                    style: AppTextStyles.head1Bold,
-                  ),
-                  
-                  SizedBox(height: 30),
-                  
-                  // Lesson Cards
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          LessonCard(
-                            title: 'Thì hiện tại đơn',
-                            description: 'Khởi động ngữ pháp bằng một trong thì cơ bản trong tiếng anh, thì hiện tại là một trong những thì quan trọng nhất trong tiếng anh.',
-                            imagePath: 'assets/images/lesson1.png',
-                          ),
-                          LessonCard(
-                            title: 'Thì hiện tại đơn',
-                            description: 'Khởi động ngữ pháp bằng một trong thì cơ bản trong tiếng anh, thì hiện tại là một trong những thì quan trọng nhất trong tiếng anh.',
-                            imagePath: 'assets/images/lesson2.png',
-                          ),
-                          LessonCard(
-                            title: 'Thì hiện tại đơn',
-                            description: 'Khởi động ngữ pháp bằng một trong thì cơ bản trong tiếng anh, thì hiện tại là một trong những thì quan trọng nhất trong tiếng anh.',
-                            imagePath: 'assets/images/lesson3.png',
-                          ),
+                    // Skill Icons
+                    SizedBox(
+                      height: 170,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          SkillIcon(imagePath: 'assets/images/icon_tu_vung.png', title: 'Từ vựng'),
+                          SkillIcon(imagePath: 'assets/images/icon_kiem_tra_1.png', title: 'Kiểm tra', iconSize: 120),
+                          SkillIcon(imagePath: 'assets/images/icon_trac_nghiem.png', title: 'Trắc nghiệm'),
+                          SkillIcon(imagePath: 'assets/images/icon_luyen_nghe.png', title: 'Luyện nghe'),
+                          SkillIcon(imagePath: 'assets/images/icon_noi_tu.png', title: 'Điền từ'),
+                          SkillIcon(imagePath: 'assets/images/icon_dung_sai.png', title: 'Đúng/Sai', iconSize: 90),
                         ],
                       ),
                     ),
-                  ),
-                ],
+
+                    const SizedBox(height: 41),
+
+                    Text('Từ vựng', style: AppTextStyles.head1Bold),
+
+                    const SizedBox(height: 30),
+
+                    FutureBuilder<List<Category>>(
+                      future: futureCategories,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Text('Lỗi: ${snapshot.error}');
+                        } else {
+                          final categories = snapshot.data!;
+                          return Column(
+                            children: categories.map((category) {
+                              return LessonCard(
+                                title: category.name,
+                                description: category.description,
+                                imagePath: getImageForCategory(category.id),
+                              );
+                            }).toList(),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-            
-            SizedBox(width: 24),
+            const SizedBox(width: 24),
           ],
         ),
       ),

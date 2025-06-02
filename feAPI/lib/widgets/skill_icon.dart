@@ -9,9 +9,7 @@ class SkillIcon extends StatelessWidget {
   final VoidCallback? onTap;
 
   final double width;
-  final double height;
   final double iconSize;
-  final double spacing;
   final Color? iconColor;
   final TextStyle? textStyle;
 
@@ -21,10 +19,8 @@ class SkillIcon extends StatelessWidget {
     this.imagePath,
     required this.title,
     this.onTap,
-    this.width = 101,
-    this.height = 260,
-    this.iconSize = 60,
-    this.spacing = 24,
+    this.width = 121,
+    this.iconSize = 80,
     this.iconColor,
     this.textStyle,
   }) : super(key: key);
@@ -33,30 +29,42 @@ class SkillIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: SizedBox(
         width: width,
-        height: height,
         child: Column(
           children: [
-            SizedBox(
-              width: width - 1,
-              height: width - 1,
-              child: imagePath != null
-                  ? Image.asset(
-                      imagePath!,
-                      fit: BoxFit.contain,
-                    )
-                  : Icon(
-                      icon ?? Icons.help_outline,
-                      size: iconSize,
-                      color: iconColor ?? AppColors.brownNormal,
-                    ),
+            Container(
+              width: width,
+              height: width,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color(0xFFF2E9DE),
+              ),
+              child: Center(
+                child: imagePath != null
+                    ? Image.asset(
+                        imagePath!,
+                        width: iconSize,
+                        height: iconSize,
+                        fit: BoxFit.contain,
+                      )
+                    : Icon(
+                        icon ?? Icons.help_outline,
+                        size: iconSize,
+                        color: iconColor ?? AppColors.brownNormal,
+                      ),
+              ),
             ),
-            SizedBox(height: spacing),
+
+            const Spacer(),
+
             Text(
               title,
               style: textStyle ?? AppTextStyles.head3Black,
               textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
             ),
           ],
         ),
@@ -64,4 +72,3 @@ class SkillIcon extends StatelessWidget {
     );
   }
 }
-
