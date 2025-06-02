@@ -1,0 +1,41 @@
+## Build results
+bin/
+obj/
+*.user
+*.suo
+
+## Rider project files
+.idea/
+
+## Visual Studio Code
+.vscode/
+
+## ASP.NET Core secrets
+secrets.json
+
+## User-specific files
+*.vspscc
+*.vssscc
+
+## Logs
+*.log
+
+## ASP.NET configs to ignore
+appsettings.Development.json
+appsettings.Dev.json
+appsettings.*.local.json
+
+## Environment files
+.env
+
+## Dependency folders
+node_modules/
+packages/
+wwwroot/lib/
+
+## Docker
+**/docker-compose.override.yml
+
+## Others (optional)
+Thumbs.db
+.DS_Store
