@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\services\\lessonservices\\lessonresults\\lessonresultservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\services\\lessonservices\\lessonresults\\lessonresultservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\repositories\\lessonrepository\\lessonresults\\lessonresultrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\repositories\\lessonrepository\\lessonresults\\lessonresultrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\controllers\\lessonscontrollers\\lessonresultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\lessonscontrollers\\lessonresultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\controllers\\accountcontrolles\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -13,6 +21,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\controllers\\accountcontrolles\\signupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\accountcontrolles\\signupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\controllers\\questionscontrollers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\questionscontrollers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\controllers\\categoriescontrollers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\categoriescontrollers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\models\\dtos\\logindto\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\models\\dtos\\logindto\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\repositories\\userrepository\\usercrudrepo\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -87,10 +111,6 @@
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\models\\dtos\\logindto\\refreshtokenrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\models\\dtos\\logindto\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\models\\dtos\\logindto\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\repositories\\userrepository\\userquestionanswers\\iuserquestionanswerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\repositories\\userrepository\\userquestionanswers\\iuserquestionanswerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -99,20 +119,8 @@
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\services\\userservices\\userquestionanswers\\userquestionanswerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\repositories\\lessonrepository\\lessonresults\\lessonresultrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\repositories\\lessonrepository\\lessonresults\\lessonresultrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\repositories\\lessonrepository\\lessonresults\\ilessonresultrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\repositories\\lessonrepository\\lessonresults\\ilessonresultrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\controllers\\categoriescontrollers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\categoriescontrollers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\controllers\\questionscontrollers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\questionscontrollers\\questioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\repositories\\questionrepo\\questionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -123,16 +131,8 @@
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\services\\questionservices\\questionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\services\\lessonservices\\lessonresults\\lessonresultservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\services\\lessonservices\\lessonresults\\lessonresultservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\services\\lessonservices\\lessonresults\\ilessonresultservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\services\\lessonservices\\lessonresults\\ilessonresultservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\controllers\\lessonscontrollers\\lessonresultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|solutionrelative:apptienganhbe\\controllers\\lessonscontrollers\\lessonresultscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E7360B1-C765-4AB1-92DA-702D7D437ADB}|AppTiengAnhBE\\AppTiengAnhBE.csproj|d:\\apptienganh\\app_tienganh\\backend_api\\apptienganhbe\\services\\questionservices\\iquestionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -270,7 +270,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -311,49 +311,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\UserRepository.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\UserRepository.cs",
-              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\UserRepository.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\UserRepository.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAowB4AAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T17:00:17.084Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\AuthServices\\AuthService.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\AuthServices\\AuthService.cs",
-              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\AuthServices\\AuthService.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Services\\AuthServices\\AuthService.cs",
-              "ViewState": "AgIAAHUAAAAAAAAAAADwv4gAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T16:59:02.98Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "User.cs",
-              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\SystemModel\\User.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\SystemModel\\User.cs",
-              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\SystemModel\\User.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Models\\SystemModel\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T16:58:01.579Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "LoginController.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\AccountControlles\\LoginController.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\AccountControlles\\LoginController.cs",
               "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\AccountControlles\\LoginController.cs",
               "RelativeToolTip": "AppTiengAnhBE\\Controllers\\AccountControlles\\LoginController.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAYwBAAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwCIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-31T16:42:48.436Z",
               "EditorCaption": ""
@@ -361,6 +324,45 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "LessonResultsController.cs",
+              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
+              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAkwDcAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T17:39:40.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LessonResultRepository.cs",
+              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\LessonResultRepository.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\LessonResultRepository.cs",
+              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\LessonResultRepository.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\LessonResultRepository.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwCgAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T17:48:26.712Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LessonResultService.cs",
+              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
+              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAUwDgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T17:49:03.308Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "SignUpController.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\AccountControlles\\SignUpController.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\AccountControlles\\SignUpController.cs",
@@ -373,7 +375,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
+              "Title": "QuestionController.cs",
+              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
+              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T13:11:48.445Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CategoryController.cs",
+              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\CategoriesControllers\\CategoryController.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\CategoriesControllers\\CategoryController.cs",
+              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\CategoriesControllers\\CategoryController.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\CategoriesControllers\\CategoryController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-31T16:45:15.522Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "LoginRequest.cs",
+              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
+              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-31T17:03:08.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Program.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Program.cs",
@@ -386,7 +427,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 9,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\UserRepository.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\UserRepository.cs",
+              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\UserRepository.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\UserRepository.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAowB4AAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T17:00:17.084Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\SystemModel\\User.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\SystemModel\\User.cs",
+              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\SystemModel\\User.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Models\\SystemModel\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T16:58:01.579Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\AuthServices\\AuthService.cs",
+              "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\AuthServices\\AuthService.cs",
+              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\AuthServices\\AuthService.cs",
+              "RelativeToolTip": "AppTiengAnhBE\\Services\\AuthServices\\AuthService.cs",
+              "ViewState": "AgIAAHUAAAAAAAAAAADwv4gAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-31T16:59:02.98Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\AuthServices\\IAuthService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\AuthServices\\IAuthService.cs",
@@ -398,7 +476,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "UserService.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\UserServices\\UserCRUDServices\\UserService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\UserServices\\UserCRUDServices\\UserService.cs",
@@ -410,7 +488,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 15,
               "Title": "IUserService.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\UserServices\\UserCRUDServices\\IUserService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\UserServices\\UserCRUDServices\\IUserService.cs",
@@ -422,7 +500,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 16,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\IUserRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\UserRepository\\UserCRUDRepo\\IUserRepository.cs",
@@ -434,7 +512,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "UserController.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\UsersControllers\\UserController.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\UsersControllers\\UserController.cs",
@@ -446,7 +524,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "SignUpRequest.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\SignUpDTO\\SignUpRequest.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\SignUpDTO\\SignUpRequest.cs",
@@ -458,7 +536,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 18,
               "Title": "ReminderRepository.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\RemindersCRUDRepo\\ReminderRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\RemindersCRUDRepo\\ReminderRepository.cs",
@@ -470,7 +548,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 19,
               "Title": "IUserQuestionAnswerService.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\UserServices\\UserQuestionAnswers\\IUserQuestionAnswerService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\UserServices\\UserQuestionAnswers\\IUserQuestionAnswerService.cs",
@@ -482,7 +560,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 20,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\appsettings.Development.json",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\appsettings.Development.json",
@@ -494,7 +572,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 21,
               "Title": "LoginResponse.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginResponse.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginResponse.cs",
@@ -506,7 +584,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 22,
               "Title": "JwtSettings.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\SystemModel\\JwtSettings.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\SystemModel\\JwtSettings.cs",
@@ -518,7 +596,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 24,
               "Title": "UserQuestionAnswerRepository.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\UserRepository\\UserQuestionAnswers\\UserQuestionAnswerRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\UserRepository\\UserQuestionAnswers\\UserQuestionAnswerRepository.cs",
@@ -530,7 +608,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 25,
               "Title": "RefreshTokenResponse.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\RefreshTokenResponse.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\RefreshTokenResponse.cs",
@@ -542,7 +620,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 26,
               "Title": "RefreshTokenRequest.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\RefreshTokenRequest.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\RefreshTokenRequest.cs",
@@ -554,7 +632,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 23,
               "Title": "Lesson.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\SystemModel\\Lesson.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\SystemModel\\Lesson.cs",
@@ -566,19 +644,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "LoginRequest.cs",
-              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
-              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Models\\DTOs\\LoginDTO\\LoginRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T17:03:08.106Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 27,
               "Title": "IUserQuestionAnswerRepository.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\UserRepository\\UserQuestionAnswers\\IUserQuestionAnswerRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\UserRepository\\UserQuestionAnswers\\IUserQuestionAnswerRepository.cs",
@@ -590,7 +656,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 28,
               "Title": "UserQuestionAnswerService.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\UserServices\\UserQuestionAnswers\\UserQuestionAnswerService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\UserServices\\UserQuestionAnswers\\UserQuestionAnswerService.cs",
@@ -602,19 +668,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "CategoryController.cs",
-              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\CategoriesControllers\\CategoryController.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\CategoriesControllers\\CategoryController.cs",
-              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\CategoriesControllers\\CategoryController.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\CategoriesControllers\\CategoryController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T16:45:15.522Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 29,
               "Title": "ILessonResultRepository.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\ILessonResultRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\ILessonResultRepository.cs",
@@ -626,19 +680,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "LessonResultRepository.cs",
-              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\LessonResultRepository.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\LessonResultRepository.cs",
-              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\LessonResultRepository.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Repositories\\LessonRepository\\LessonResults\\LessonResultRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T17:48:26.712Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
               "Title": "QuestionRepository.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Repositories\\QuestionRepo\\QuestionRepository.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Repositories\\QuestionRepo\\QuestionRepository.cs",
@@ -650,7 +692,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "ILessonResultService.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\ILessonResultService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\ILessonResultService.cs",
@@ -662,31 +704,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "LessonResultService.cs",
-              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
-              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Services\\LessonServices\\LessonResults\\LessonResultService.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAUwCkAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T17:49:03.308Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "QuestionController.cs",
-              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
-              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\QuestionsControllers\\QuestionController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T13:11:48.445Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 31,
               "Title": "QuestionService.cs",
               "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Services\\QuestionServices\\QuestionService.cs",
               "RelativeDocumentMoniker": "AppTiengAnhBE\\Services\\QuestionServices\\QuestionService.cs",
@@ -695,18 +713,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-30T13:31:57.373Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "LessonResultsController.cs",
-              "DocumentMoniker": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
-              "RelativeDocumentMoniker": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
-              "ToolTip": "D:\\AppTiengAnh\\app_tienganh\\backend_api\\AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
-              "RelativeToolTip": "AppTiengAnhBE\\Controllers\\LessonsControllers\\LessonResultsController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAIBJwDMAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T17:39:40.339Z"
             },
             {
               "$type": "Document",

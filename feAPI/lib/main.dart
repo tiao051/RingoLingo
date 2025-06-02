@@ -17,9 +17,9 @@ class RingoLingoApp extends StatelessWidget {
       title: 'RingoLingo',
       theme: ThemeData(
         primarySwatch: Colors.red,
-        fontFamily: 'Inter', // Changed to Inter to match the design
+        fontFamily: 'Inter', 
       ),
-      home: LoginScreen(), // Changed to RegisterPage
+      home: HomePage(),
       debugShowCheckedModeBanner: false,
       routes: {
         '/home': (context) => const HomePage(),

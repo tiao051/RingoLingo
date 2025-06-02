@@ -10,9 +10,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  bool _isRegisterHovered = false;
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+
+  bool _isLoginHovered = false;
+  bool _isGoogleHovered = false;
+  bool _isFacebookHovered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,6 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Hình ảnh trang trí (ẩn nếu màn nhỏ)
                 if (screenWidth > 900)
                   Flexible(
                     flex: 1,
@@ -43,7 +47,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 const SizedBox(width: 40),
 
-                // Form đăng ký
                 Flexible(
                   flex: 1,
                   child: Container(
@@ -86,6 +89,28 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(height: 20),
 
                         _buildSocialButtons(),
+                        const SizedBox(height: 20),
+
+                        MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          onEnter: (_) => setState(() => _isLoginHovered = true),
+                          onExit: (_) => setState(() => _isLoginHovered = false),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/login');
+                            },
+                            child: Text(
+                              'Bạn đã có tài khoản? Đăng nhập',
+                              style: TextStyle(
+                                color: _isLoginHovered ? Colors.black : Color(0xFFAF1515),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                                decorationColor: _isLoginHovered ? Colors.black : Color(0xFFAF1515),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -152,16 +177,21 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget _buildRegisterButton() {
-    return GestureDetector(
+ Widget _buildRegisterButton() {
+  return MouseRegion(
+    cursor: SystemMouseCursors.click,
+    onEnter: (_) => setState(() => _isRegisterHovered = true),
+    onExit: (_) => setState(() => _isRegisterHovered = false),
+    child: GestureDetector(
       onTap: () {
         print('Register button tapped');
       },
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
         width: double.infinity,
         height: 44,
         decoration: BoxDecoration(
-          color: const Color(0xFFAF1515),
+          color: _isRegisterHovered ? const Color(0xFF841111) : const Color(0xFFAF1515),
           borderRadius: BorderRadius.circular(20),
         ),
         child: const Center(
@@ -174,32 +204,44 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildSocialButtons() {
     return Row(
       children: [
         Expanded(
-          child: _socialButton('Google'),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            onEnter: (_) => setState(() => _isGoogleHovered = true),
+            onExit: (_) => setState(() => _isGoogleHovered = false),
+            child: _socialButton('Google', hovered: _isGoogleHovered),
+          ),
         ),
         const SizedBox(width: 16),
         Expanded(
-          child: _socialButton('Facebook'),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            onEnter: (_) => setState(() => _isFacebookHovered = true),
+            onExit: (_) => setState(() => _isFacebookHovered = false),
+            child: _socialButton('Facebook', hovered: _isFacebookHovered),
+          ),
         ),
       ],
     );
   }
 
-  Widget _socialButton(String title) {
+  Widget _socialButton(String title, {bool hovered = false}) {
     return GestureDetector(
       onTap: () {
         print('$title login tapped');
       },
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
         height: 44,
         decoration: BoxDecoration(
-          color: const Color(0xFFD5B893),
+          color: hovered ? const Color(0xFFB39B76) : const Color(0xFFD5B893),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Center(
