@@ -26,10 +26,10 @@ flutter:
 
   # Uncomment the following section to add custom fonts
   # fonts:
-  #   - family: Roboto
+  #   - family: Inter
   #     fonts:
-  #       - asset: assets/fonts/Roboto-Regular.ttf
-  #       - asset: assets/fonts/Roboto-Bold.ttf
+  #       - asset: fonts/Inter-Regular.ttf
+  #       - asset: fonts/Inter-Bold.ttf
   #         weight: 700
 
   # To add assets to your application, add an assets section here:

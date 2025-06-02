@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }),
       );
       if (response.statusCode == 200) {
-        Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.of(context).pushReplacementNamed('/vocabulary');
       } else {
         setState(() {
           _errorMessage = 'Sai tài khoản hoặc mật khẩu';
