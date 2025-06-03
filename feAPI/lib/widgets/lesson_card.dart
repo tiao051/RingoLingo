@@ -16,14 +16,15 @@ class LessonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double cardWidth = MediaQuery.of(context).size.width * 0.6;
+
     return Container(
-      width: 884,
+      width: cardWidth,
       height: 226,
-      margin: EdgeInsets.only(bottom: 24),
+      margin: const EdgeInsets.only(bottom: 24),
       decoration: BoxDecoration(
         color: AppColors.brownNormal,
         borderRadius: BorderRadius.circular(20),
-        // Optional: shadow
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -36,21 +37,17 @@ class LessonCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: Row(
           children: [
-            // Ảnh giữ nguyên kích thước gốc
             SizedBox(
-              width: 564, // Bạn thay đổi width này thành kích thước gốc ảnh của bạn
+              width: cardWidth * 0.6, // 60% cho ảnh
               height: 226,
               child: Image.asset(
                 imagePath,
-                fit: BoxFit.none,  // Giữ nguyên kích thước ảnh gốc
-                alignment: Alignment.center,
+                fit: BoxFit.cover,
               ),
             ),
-
-            // Phần text bên phải chiếm phần còn lại
             Expanded(
               child: Container(
-                color: const Color(0xFFF2E9DE),  // Màu nền mới
+                color: const Color(0xFFF2E9DE),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 20, 25, 20),
                   child: Center(
@@ -65,7 +62,7 @@ class LessonCard extends StatelessWidget {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Text(
                           description,
                           style: AppTextStyles.body,
@@ -73,7 +70,7 @@ class LessonCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         SizedBox(
                           width: 200,
                           height: 60,
