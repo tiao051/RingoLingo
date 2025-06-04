@@ -1,47 +1,29 @@
-class Quiz {
-  final int id;
-  final int categoryId;
-  final String title;
+class QuizQuestion {
   final String question;
   final List<String> options;
-  final int correctAnswerIndex;
-  final String explanation;
-  final String difficulty; // 'easy', 'medium', 'hard'
+  final int correctAnswer;
+  final String? vietnamese;
+  final String? english;
 
-  Quiz({
-    required this.id,
-    required this.categoryId,
-    required this.title,
+  QuizQuestion({
     required this.question,
     required this.options,
-    required this.correctAnswerIndex,
-    required this.explanation,
-    required this.difficulty,
+    required this.correctAnswer,
+    this.vietnamese,
+    this.english,
   });
 
-  factory Quiz.fromJson(Map<String, dynamic> json) {
-    return Quiz(
-      id: json['id'] ?? 0,
-      categoryId: json['category_id'] ?? 0,
-      title: json['title'] ?? '',
-      question: json['question'] ?? '',
-      options: List<String>.from(json['options'] ?? []),
-      correctAnswerIndex: json['correct_answer_index'] ?? 0,
-      explanation: json['explanation'] ?? '',
-      difficulty: json['difficulty'] ?? 'easy',
-    );
-  }
+  factory QuizQuestion.fromJson(Map<String, dynamic> json) {
+    List<dynamic> answers = json['answersText'];
+    List<String> options = answers.map((e) => e['answerText'] as String).toList();
+    int correctIndex = answers.indexWhere((e) => e['isCorrect'] == true);
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'category_id': categoryId,
-      'title': title,
-      'question': question,
-      'options': options,
-      'correct_answer_index': correctAnswerIndex,
-      'explanation': explanation,
-      'difficulty': difficulty,
-    };
+    return QuizQuestion(
+      question: json['questionText'],
+      options: options,
+      correctAnswer: correctIndex,
+      vietnamese: null, // Có thể custom nếu có thêm field
+      english: null,
+    );
   }
 }

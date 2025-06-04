@@ -8,7 +8,8 @@ obj/
 .idea/
 
 ## Visual Studio Code
-.vs/
+backend_api/.vs/
+
 
 .vscode/
 

@@ -182,6 +182,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                           children: [
                             FlippableBanner(
                               imagePath: 'assets/images/banner_bai_1.png',
+                              backText: 'Thế giới động vật',
                               width: 270,
                               height: 601,
                               onTap: () {
@@ -192,6 +193,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                             const SizedBox(width: 20),
                             FlippableBanner(
                               imagePath: 'assets/images/banner_bai_2.png',
+                              backText: 'Thực phẩm và món ăn',
                               width: 270,
                               height: 601,
                               onTap: () {
@@ -202,6 +204,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                             const SizedBox(width: 20),
                             FlippableBanner(
                               imagePath: 'assets/images/banner_bai_3.png',
+                              backText: 'Đi khắp muôn nơi',
                               width: 270,
                               height: 601,
                               onTap: () {
