@@ -78,7 +78,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.asset('assets/images/title_logo.png', width: 71, height: 48),
+                          Image.asset('assets/images/title_logo.png',
+                              width: 71, height: 48),
                           const SizedBox(height: 32),
                           const Text(
                             'Đăng nhập',
@@ -136,29 +137,41 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 50,
                             child: MouseRegion(
                               cursor: SystemMouseCursors.click,
-                              onEnter: (_) => setState(() => _hoveredLogin = true),
-                              onExit: (_) => setState(() => _hoveredLogin = false),
+                              onEnter: (_) =>
+                                  setState(() => _hoveredLogin = true),
+                              onExit: (_) =>
+                                  setState(() => _hoveredLogin = false),
                               child: AnimatedContainer(
                                 duration: const Duration(milliseconds: 150),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   boxShadow: _hoveredLogin == true
-                                      ? [BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 2))]
+                                      ? [
+                                          BoxShadow(
+                                              color: Colors.black26,
+                                              blurRadius: 8,
+                                              offset: Offset(0, 2))
+                                        ]
                                       : [],
                                 ),
                                 child: ElevatedButton(
                                   onPressed: _isLoading ? null : _login,
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: _hoveredLogin == true ? const Color(0xFFC21717) : const Color(0xFFAF1515),
+                                    backgroundColor: _hoveredLogin == true
+                                        ? const Color(0xFFC21717)
+                                        : const Color(0xFFAF1515),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                   ),
                                   child: _isLoading
-                                      ? const CircularProgressIndicator(color: Colors.white)
+                                      ? const CircularProgressIndicator(
+                                          color: Colors.white)
                                       : const Text(
                                           'Đăng nhập',
-                                          style: TextStyle(fontSize: 20, color: Color(0xFFF2E9DE)),
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Color(0xFFF2E9DE)),
                                         ),
                                 ),
                               ),
@@ -194,17 +207,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               MouseRegion(
                                 cursor: SystemMouseCursors.click,
-                                onEnter: (_) => setState(() => _hoveredLink = 'register'),
-                                onExit: (_) => setState(() => _hoveredLink = null),
+                                onEnter: (_) =>
+                                    setState(() => _hoveredLink = 'register'),
+                                onExit: (_) =>
+                                    setState(() => _hoveredLink = null),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.of(context).pushNamed('/register');
+                                    Navigator.of(context)
+                                        .pushNamed('/register');
                                   },
                                   child: Text(
                                     'Chưa có tài khoản?',
                                     style: TextStyle(
                                       fontSize: 16,
-                                      color: _hoveredLink == 'register' ? const Color(0xFFC21717) : Colors.black,
+                                      color: _hoveredLink == 'register'
+                                          ? const Color(0xFFC21717)
+                                          : Colors.black,
                                       decoration: TextDecoration.underline,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -213,8 +231,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               MouseRegion(
                                 cursor: SystemMouseCursors.click,
-                                onEnter: (_) => setState(() => _hoveredLink = 'forgot'),
-                                onExit: (_) => setState(() => _hoveredLink = null),
+                                onEnter: (_) =>
+                                    setState(() => _hoveredLink = 'forgot'),
+                                onExit: (_) =>
+                                    setState(() => _hoveredLink = null),
                                 child: GestureDetector(
                                   onTap: () {
                                     // TODO: Add forgot password navigation
@@ -223,7 +243,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     'Quên mật khẩu',
                                     style: TextStyle(
                                       fontSize: 16,
-                                      color: _hoveredLink == 'forgot' ? const Color(0xFFC21717) : Colors.black,
+                                      color: _hoveredLink == 'forgot'
+                                          ? const Color(0xFFC21717)
+                                          : Colors.black,
                                       decoration: TextDecoration.underline,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -257,10 +279,17 @@ class _LoginScreenState extends State<LoginScreen> {
           width: 140,
           height: 45,
           decoration: BoxDecoration(
-            color: _hoveredSocial == label ? const Color(0xFFEEDFC2) : const Color(0xFFD5B893),
+            color: _hoveredSocial == label
+                ? const Color(0xFFEEDFC2)
+                : const Color(0xFFD5B893),
             borderRadius: BorderRadius.circular(20),
             boxShadow: _hoveredSocial == label
-                ? [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))]
+                ? [
+                    BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 6,
+                        offset: Offset(0, 2))
+                  ]
                 : [],
           ),
           child: Center(

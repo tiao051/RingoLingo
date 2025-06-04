@@ -12,6 +12,7 @@ import 'package:ringolingo_app/widgets/skill_icon.dart';
 import 'package:ringolingo_app/widgets/lesson_banner.dart';
 import 'package:ringolingo_app/widgets/flippable_banner.dart';
 import 'lesson_selection_screen.dart';
+import 'listening_practice_screen.dart';
 import 'package:ringolingo_app/screens/tracnghiem_screen.dart';
 
 class VocabularyScreen extends StatefulWidget {
@@ -28,7 +29,9 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   void initState() {
     super.initState();
     futureCategories = fetchCategories();
-  }  void onSkillTap(String skill) {
+  }
+
+  void onSkillTap(String skill) {
     setState(() {
       selectedSkill = skill;
       if (skill == 'Từ vựng') {
@@ -51,6 +54,42 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         return 'assets/images/default_icon.png';
     }
   }
+
+  Map<int, bool> lessonHoverStates = {};
+  Map<int, bool> lessonPressStates = {};
+
+  List<Lesson> getFakeListeningLessons() {
+    return [
+      Lesson(
+        id: 1,
+        title: 'Animals in the nature',
+        categoryId: 1,
+        description:
+            'Explore animals and nature; animal facts and stats, mammals, marsupials, birds, insects, reptiles, dinosaurs, megafauna, fossils, environment, plants, ...',
+      ),
+      Lesson(
+        id: 2,
+        title: 'Food and things',
+        categoryId: 2,
+        description:
+            'Food and Things are about what we eat and the items we use, like fruits, vegetables, and kitchen tools.',
+      ),
+      Lesson(
+        id: 3,
+        title: 'Travelling around the world',
+        categoryId: 3,
+        description:
+            'Travel is about going to new places, exploring cultures, and enjoying exciting adventures.',
+      ),
+    ];
+  }
+
+  final Map<int, IconData> lessonIcons = {
+    1: Icons.pets,
+    2: Icons.fastfood,
+    3: Icons.flight,
+    // Nếu bạn có thêm bài 4, 5 thì thêm icon phù hợp ở đây
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -171,90 +210,8 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                           ),
                         ],
                       ),
-                    ),                    
-                      if (selectedSkill == 'Trắc nghiệm') ...[
-                      const SizedBox(height: 32),
-                      Text('Chọn bài trắc nghiệm', style: AppTextStyles.head1Bold),
-                      const SizedBox(height: 20),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            FlippableBanner(
-                              imagePath: 'assets/images/banner_bai_1.png',
-                              backText: 'Thế giới động vật',
-                              width: 270,
-                              height: 601,
-                              onTap: () {
-                                Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => TracNghiemScreen()));
-                              },
-                            ),
-                            const SizedBox(width: 20),
-                            FlippableBanner(
-                              imagePath: 'assets/images/banner_bai_2.png',
-                              backText: 'Thực phẩm và món ăn',
-                              width: 270,
-                              height: 601,
-                              onTap: () {
-                                Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => TracNghiemScreen()));
-                              },
-                            ),
-                            const SizedBox(width: 20),
-                            FlippableBanner(
-                              imagePath: 'assets/images/banner_bai_3.png',
-                              backText: 'Đi khắp muôn nơi',
-                              width: 270,
-                              height: 601,
-                              onTap: () {
-                                Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => TracNghiemScreen()));
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ]
-                    /// CONTENT AREA
-                    else if (selectedSkill == 'Từ vựng') ...[
-                      Text('Từ vựng', style: AppTextStyles.head1Bold),
-                      const SizedBox(height: 20),
-                      FutureBuilder<List<Category>>(
-                        future: futureCategories,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
-                          } else if (snapshot.hasError) {
-                            return Text('Lỗi: ${snapshot.error}');
-                          } else {
-                            final categories = snapshot.data!;
-                            return Column(
-                              children: categories.map((category) {
-                                return LessonCard(
-                                  title: category.name,
-                                  description: category.description,
-                                  imagePath: getImageForCategory(category.id),
-                                  onTap: () {
-                                    print('DEBUG: category_id = \'[32m[1m[4m${category.id}\u001b[0m\'');
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            LessonSelectionScreen(
-                                          category: category,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              }).toList(),
-                            );
-                          }
-                        },
-                      ),
-                    ] else if (selectedSkill == 'Bài học') ...[
+                    ),
+                     if (selectedSkill == 'Bài học') ...[
                       Text('Bài học', style: AppTextStyles.head1Bold),
                       const SizedBox(height: 20),
                       FutureBuilder<List<Lesson>>(
@@ -281,6 +238,325 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                               }).toList(),
                             );
                           }
+                        },
+                      ),
+                    ] 
+                    else if (selectedSkill == 'Trắc nghiệm') ...[
+                      const SizedBox(height: 32),
+                      Text('Chọn bài trắc nghiệm',
+                          style: AppTextStyles.head1Bold),
+                      const SizedBox(height: 20),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            FlippableBanner(
+                              imagePath: 'assets/images/banner_bai_1.png',
+                              backText: 'Thế giới động vật',
+                              width: 270,
+                              height: 601,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            TracNghiemScreen()));
+                              },
+                            ),
+                            const SizedBox(width: 20),
+                            FlippableBanner(
+                              imagePath: 'assets/images/banner_bai_2.png',
+                              backText: 'Thực phẩm và món ăn',
+                              width: 270,
+                              height: 601,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            TracNghiemScreen()));
+                              },
+                            ),
+                            const SizedBox(width: 20),
+                            FlippableBanner(
+                              imagePath: 'assets/images/banner_bai_3.png',
+                              backText: 'Đi khắp muôn nơi',
+                              width: 270,
+                              height: 601,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            TracNghiemScreen()));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ]
+
+                    /// CONTENT AREA
+                    else if (selectedSkill == 'Từ vựng') ...[
+                      Text('Từ vựng', style: AppTextStyles.head1Bold),
+                      const SizedBox(height: 20),
+                      FutureBuilder<List<Category>>(
+                        future: futureCategories,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Text('Lỗi: ${snapshot.error}');
+                          } else {
+                            final categories = snapshot.data!;
+                            return Column(
+                              children: categories.map((category) {
+                                return LessonCard(
+                                  title: category.name,
+                                  description: category.description,
+                                  imagePath: getImageForCategory(category.id),
+                                  onTap: () {
+                                    print(
+                                        'DEBUG: category_id = \'[32m[1m[4m${category.id}\u001b[0m\'');
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            LessonSelectionScreen(
+                                          category: category,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }).toList(),
+                            );
+                          }
+                        },
+                      ),
+                    ] else if (selectedSkill == 'Luyện nghe') ...[
+                      const SizedBox(height: 32),
+                      AnimatedOpacity(
+                        duration: const Duration(milliseconds: 600),
+                        opacity: 1.0,
+                        child: Text('Chọn bài luyện nghe',
+                            style: AppTextStyles.head1Bold),
+                      ),
+                      const SizedBox(height: 20),
+                      Builder(
+                        builder: (context) {
+                          final listeningLessons = getFakeListeningLessons();
+                          return Column(
+                            children:
+                                listeningLessons.asMap().entries.map((entry) {
+                              final index = entry.key;
+                              final lesson = entry.value;
+                              final isHovering =
+                                  lessonHoverStates[lesson.id] ?? false;
+
+                              return AnimatedContainer(
+                                duration:
+                                    Duration(milliseconds: 300 + (index * 50)),
+                                curve: Curves.easeOutCubic,
+                                margin: const EdgeInsets.only(bottom: 16),
+                                child: MouseRegion(
+                                  onEnter: (_) => setState(() =>
+                                      lessonHoverStates[lesson.id] = true),
+                                  onExit: (_) => setState(() =>
+                                      lessonHoverStates[lesson.id] = false),
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeOutCubic,
+                                    padding: const EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                      color: isHovering
+                                          ? Colors.white
+                                          : Colors.white.withOpacity(0.9),
+                                      borderRadius: BorderRadius.circular(16),
+                                      border: Border.all(
+                                        color: isHovering
+                                            ? AppColors.brownDark
+                                            : AppColors.brownNormal
+                                                .withOpacity(0.5),
+                                        width: isHovering ? 2 : 1,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: isHovering
+                                              ? AppColors.brownDark
+                                                  .withOpacity(0.2)
+                                              : AppColors.brownNormal
+                                                  .withOpacity(0.1),
+                                          blurRadius: isHovering ? 15 : 8,
+                                          offset: Offset(0, isHovering ? 8 : 4),
+                                        ),
+                                      ],
+                                    ),
+                                    transform: Matrix4.identity()
+                                      ..translate(0.0, isHovering ? -2.0 : 0.0)
+                                      ..scale(isHovering ? 1.01 : 1.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        print(
+                                            'Đã bấm vào lesson id: ${lesson.id}');
+                                      },
+                                      borderRadius: BorderRadius.circular(16),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          // Lesson Icon
+                                          AnimatedContainer(
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            width: 70,
+                                            height: 70,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.brownLight
+                                                  .withOpacity(
+                                                      isHovering ? 0.3 : 0.2),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: Icon(
+                                              lessonIcons[lesson.id] ??
+                                                  Icons.headphones_rounded,
+                                              size: isHovering ? 40 : 35,
+                                              color: AppColors.brownDark,
+                                            ),
+                                          ),
+
+                                          const SizedBox(width: 20),
+
+                                          // Lesson Content
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                AnimatedDefaultTextStyle(
+                                                  duration: const Duration(
+                                                      milliseconds: 300),
+                                                  style: AppTextStyles.head3Bold
+                                                      .copyWith(
+                                                    color: isHovering
+                                                        ? AppColors.brownDark
+                                                        : AppColors.brownNormal,
+                                                  ),
+                                                  child: Text(
+                                                    lesson.title,
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 8),
+                                                Text(
+                                                  lesson.description,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: AppColors.brownNormal
+                                                        .withOpacity(0.8),
+                                                    height: 1.5,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+
+                                          // Action Button
+                                          AnimatedContainer(
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            width:
+                                                100, // giữ cố định 100 px để tránh overflow
+                                            height: 40,
+                                            child: isHovering
+                                                ? Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            left: 12),
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                        colors: [
+                                                          Colors.blue[400]!,
+                                                          Colors.blue[600]!,
+                                                        ],
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.blue
+                                                              .withOpacity(0.3),
+                                                          blurRadius: 8,
+                                                          offset: const Offset(
+                                                              0, 4),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Material(
+                                                      color: Colors.transparent,
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          print(
+                                                              'Bắt đầu bài nghe: ${lesson.id}');
+                                                        },
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        child: const Center(
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              Icon(
+                                                                Icons
+                                                                    .headphones,
+                                                                color: Colors
+                                                                    .white,
+                                                                size: 16,
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 4),
+                                                              Text(
+                                                                'Bắt đầu',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 12,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const SizedBox
+                                                    .shrink(), // ẩn khi không hover nhưng vẫn giữ chỗ
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          );
                         },
                       ),
                     ] else ...[

@@ -126,7 +126,8 @@ class LeftSidebar extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem(Widget iconWidget, String title, {bool isActive = false}) {
+  Widget _buildMenuItem(Widget iconWidget, String title,
+      {bool isActive = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
       child: GestureDetector(
@@ -147,9 +148,7 @@ class LeftSidebar extends StatelessWidget {
               const SizedBox(width: 12),
               Text(
                 title,
-                style: isActive
-                    ? AppTextStyles.head3Bold
-                    : AppTextStyles.head3,
+                style: isActive ? AppTextStyles.head3Bold : AppTextStyles.head3,
               ),
             ],
           ),

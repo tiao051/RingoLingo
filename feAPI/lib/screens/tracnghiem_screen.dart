@@ -22,7 +22,8 @@ class QuizQuestion {
 
   factory QuizQuestion.fromJson(Map<String, dynamic> json) {
     List<dynamic> answers = json['answersText'];
-    List<String> options = answers.map((e) => e['answerText'] as String).toList();
+    List<String> options =
+        answers.map((e) => e['answerText'] as String).toList();
     int correctIndex = answers.indexWhere((e) => e['isCorrect'] == true);
 
     return QuizQuestion(
@@ -46,7 +47,7 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
   int score = 0;
   bool quizCompleted = false;
   bool showResult = false;
-  
+
   // Image state management
   String currentImage = 'assets/images/taoSuyNghi.png';
   int consecutiveWrong = 0;
@@ -73,12 +74,12 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
       isLoading = true;
       isError = false;
     });
-    
+
     try {
       final response = await http.get(
         Uri.parse('https://localhost:7093/api/question/question-by-lesson/2'),
       );
-      
+
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         questions = data.map((e) => QuizQuestion.fromJson(e)).toList();
@@ -136,8 +137,9 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
   void nextQuestion() {
     if (selectedAnswer == null) return;
 
-    bool isCorrect = selectedAnswer == questions[currentQuestionIndex].correctAnswer;
-    
+    bool isCorrect =
+        selectedAnswer == questions[currentQuestionIndex].correctAnswer;
+
     if (isCorrect) {
       score++;
       consecutiveRight++;
@@ -146,7 +148,7 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
     } else {
       consecutiveWrong++;
       consecutiveRight = 0;
-      
+
       if (consecutiveWrong >= 2) {
         isInDisappointmentMode = true;
       }
@@ -163,17 +165,19 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
       }
     });
   }
+
   void showAnswer() {
-    bool isCorrect = selectedAnswer == questions[currentQuestionIndex].correctAnswer;
+    bool isCorrect =
+        selectedAnswer == questions[currentQuestionIndex].correctAnswer;
     updateImageAfterAnswer(isCorrect);
-    
+
     // Play audio feedback based on answer correctness
     if (isCorrect) {
       playAudio('correct.mp3');
     } else {
       playAudio('wrong.mp3');
     }
-    
+
     setState(() {
       showResult = true;
     });
@@ -216,7 +220,7 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    
+
     if (isError) {
       return Center(
         child: Column(
@@ -232,17 +236,17 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
         ),
       );
     }
-    
+
     if (questions.isEmpty) {
       return const Center(child: Text('Không có câu hỏi'));
     }
-    
+
     if (quizCompleted) {
       return buildResultScreen();
     }
 
     final question = questions[currentQuestionIndex];
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -276,15 +280,16 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
             ],
           ),
         ),
-        
+
         const SizedBox(height: 20),
-        
+
         // Question counter
         Text(
           'Câu ${currentQuestionIndex + 1}/${questions.length}',
           style: AppTextStyles.head2Bold.copyWith(color: AppColors.brownDark),
-        ),        const SizedBox(height: 30),
-        
+        ),
+        const SizedBox(height: 30),
+
         // Main content: Image and Quiz side by side
         Expanded(
           child: Row(
@@ -317,182 +322,191 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
                   ),
                 ),
               ),
-              
+
               const SizedBox(width: 20),
-              
+
               // Right side - Quiz content in white container
               Expanded(
-  flex: 3,
-  child: Container(
-    height: double.infinity,
-    padding: const EdgeInsets.all(30),
-    decoration: BoxDecoration(
-      color: AppColors.white,
-      borderRadius: BorderRadius.circular(20),
-      border: Border.all(color: AppColors.brownNormal, width: 2),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.1),
-          blurRadius: 10,
-          offset: const Offset(0, 5),
-        ),
-      ],
-    ),
-    child: SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            question.question,
-            style: AppTextStyles.head2Bold.copyWith(color: AppColors.brownDark),
-            textAlign: TextAlign.center,
-          ),
-
-          const SizedBox(height: 20),
-
-         if (currentQuestionIndex == 3 || currentQuestionIndex == 4)
-  Column(
-    children: [
-      ElevatedButton(
-        onPressed: isPlaying
-            ? null
-            : () {
-                if (currentQuestionIndex == 3) {
-                  playAudio('lion_roar.mp3');
-                } else if (currentQuestionIndex == 4) {
-                  playAudio('lion.mp3');
-                }
-              },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.brownNormal,
-          foregroundColor: AppColors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              isPlaying ? Icons.pause : Icons.volume_up,
-              size: 24,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              isPlaying ? 'Đang phát...' : 'Nghe âm thanh',
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-      const SizedBox(height: 20),
-    ],
-  ),
-
-
-          ...question.options.asMap().entries.map((entry) {
-            int index = entry.key;
-            String option = entry.value;
-            bool isSelected = selectedAnswer == index;
-            bool isCorrect = index == question.correctAnswer;
-
-            Color backgroundColor = AppColors.white;
-            Color borderColor = AppColors.brownNormal;
-
-            if (showResult) {
-              if (isCorrect) {
-                backgroundColor = AppColors.greenDark;
-                borderColor = AppColors.greenDark;
-              } else if (isSelected && !isCorrect) {
-                backgroundColor = AppColors.redLight;
-                borderColor = AppColors.redNormal;
-              }
-            } else if (isSelected) {
-              backgroundColor = AppColors.brownLight;
-              borderColor = AppColors.brownDark;
-            }
-
-            return Container(
-              margin: const EdgeInsets.only(bottom: 15),
-              child: InkWell(
-                onTap: showResult ? null : () => selectAnswer(index),
+                flex: 3,
                 child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(15),
+                  height: double.infinity,
+                  padding: const EdgeInsets.all(30),
                   decoration: BoxDecoration(
-                    color: backgroundColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: borderColor, width: 2),
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: AppColors.brownNormal, width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
                   ),
-                  child: Text(
-                    option,
-                    style: AppTextStyles.bodyBold.copyWith(
-                      color: showResult && isCorrect ? AppColors.white : AppColors.brownDark,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          question.question,
+                          style: AppTextStyles.head2Bold
+                              .copyWith(color: AppColors.brownDark),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 20),
+                        if (currentQuestionIndex == 3 ||
+                            currentQuestionIndex == 4)
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                onPressed: isPlaying
+                                    ? null
+                                    : () {
+                                        if (currentQuestionIndex == 3) {
+                                          playAudio('lion_roar.mp3');
+                                        } else if (currentQuestionIndex == 4) {
+                                          playAudio('lion.mp3');
+                                        }
+                                      },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.brownNormal,
+                                  foregroundColor: AppColors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      isPlaying ? Icons.pause : Icons.volume_up,
+                                      size: 24,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      isPlaying
+                                          ? 'Đang phát...'
+                                          : 'Nghe âm thanh',
+                                      style: AppTextStyles.body.copyWith(
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
+                        ...question.options.asMap().entries.map((entry) {
+                          int index = entry.key;
+                          String option = entry.value;
+                          bool isSelected = selectedAnswer == index;
+                          bool isCorrect = index == question.correctAnswer;
+
+                          Color backgroundColor = AppColors.white;
+                          Color borderColor = AppColors.brownNormal;
+
+                          if (showResult) {
+                            if (isCorrect) {
+                              backgroundColor = AppColors.greenDark;
+                              borderColor = AppColors.greenDark;
+                            } else if (isSelected && !isCorrect) {
+                              backgroundColor = AppColors.redLight;
+                              borderColor = AppColors.redNormal;
+                            }
+                          } else if (isSelected) {
+                            backgroundColor = AppColors.brownLight;
+                            borderColor = AppColors.brownDark;
+                          }
+
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 15),
+                            child: InkWell(
+                              onTap:
+                                  showResult ? null : () => selectAnswer(index),
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(15),
+                                decoration: BoxDecoration(
+                                  color: backgroundColor,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border:
+                                      Border.all(color: borderColor, width: 2),
+                                ),
+                                child: Text(
+                                  option,
+                                  style: AppTextStyles.bodyBold.copyWith(
+                                    color: showResult && isCorrect
+                                        ? AppColors.white
+                                        : AppColors.brownDark,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        const SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (!showResult && selectedAnswer != null)
+                              ElevatedButton(
+                                onPressed: showAnswer,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.brownDark,
+                                  foregroundColor: AppColors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 25, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child: Text('Xem đáp án',
+                                    style: AppTextStyles.bodyBold),
+                              ),
+                            if (showResult)
+                              ElevatedButton(
+                                onPressed: nextQuestion,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.greenDark,
+                                  foregroundColor: AppColors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 25, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child: Text(
+                                  currentQuestionIndex < questions.length - 1
+                                      ? 'Câu tiếp theo'
+                                      : 'Hoàn thành',
+                                  style: AppTextStyles.bodyBold,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
-            );
-          }).toList(),
-
-          const SizedBox(height: 30),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (!showResult && selectedAnswer != null)
-                ElevatedButton(
-                  onPressed: showAnswer,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.brownDark,
-                    foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: Text('Xem đáp án', style: AppTextStyles.bodyBold),
-                ),
-              if (showResult)
-                ElevatedButton(
-                  onPressed: nextQuestion,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.greenDark,
-                    foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: Text(
-                    currentQuestionIndex < questions.length - 1 ? 'Câu tiếp theo' : 'Hoàn thành',
-                    style: AppTextStyles.bodyBold,
-                  ),
-                ),
-            ],
-          ),
-        ],
-      ),
-    ),
-  ),
-),
             ],
           ),
         ),
       ],
     );
   }
+
   Widget buildResultScreen() {
     double percentage = (score / questions.length) * 100;
     String grade = '';
     Color gradeColor = AppColors.redNormal;
     String resultImage = 'assets/images/taoVuiVe.png';
-    
+
     if (percentage >= 80) {
       grade = 'Xuất sắc!';
       gradeColor = AppColors.greenDark;
@@ -510,7 +524,7 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
       gradeColor = AppColors.redNormal;
       resultImage = 'assets/images/taoThatVong.png';
     }
-    
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -535,9 +549,9 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
             ),
           ),
         ),
-        
+
         const SizedBox(width: 20),
-        
+
         // Right side - Result content in white container
         Expanded(
           flex: 3,
@@ -562,11 +576,10 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
               children: [
                 Text(
                   'Kết quả bài thi',
-                  style: AppTextStyles.head1Bold.copyWith(color: AppColors.brownDark),
+                  style: AppTextStyles.head1Bold
+                      .copyWith(color: AppColors.brownDark),
                 ),
-                
                 const SizedBox(height: 30),
-                
                 Text(
                   '$score/${questions.length}',
                   style: AppTextStyles.head1Bold.copyWith(
@@ -574,21 +587,16 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
                     color: gradeColor,
                   ),
                 ),
-                
                 Text(
                   '${percentage.toStringAsFixed(0)}%',
                   style: AppTextStyles.head2Bold.copyWith(color: gradeColor),
                 ),
-                
                 const SizedBox(height: 20),
-                
                 Text(
                   grade,
                   style: AppTextStyles.head2Bold.copyWith(color: gradeColor),
                 ),
-                
                 const SizedBox(height: 40),
-                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -597,22 +605,22 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.brownDark,
                         foregroundColor: AppColors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
                       child: Text('Làm lại', style: AppTextStyles.bodyBold),
                     ),
-                    
                     const SizedBox(width: 20),
-                    
                     ElevatedButton(
                       onPressed: () => Navigator.of(context).pop(),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.greenDark,
                         foregroundColor: AppColors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -645,7 +653,8 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
           style: AppTextStyles.head2Bold.copyWith(color: AppColors.brownDark),
         ),
         centerTitle: true,
-      ),      body: Padding(
+      ),
+      body: Padding(
         padding: const EdgeInsets.all(20),
         child: buildQuizContent(),
       ),
