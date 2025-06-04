@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   http: ^1.2.1
+  audioplayers: ^5.2.1
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
@@ -22,7 +23,11 @@ flutter:
   uses-material-design: true
   
   assets:
-    - assets/images/ # Khai báo toàn bộ thư mục assets
+    - assets/images/
+    - assets/audio/
+    - assets/images/dong_vat/
+    - assets/images/thuc_an/
+    - assets/images/gia_dinh/ # Khai báo toàn bộ thư mục assets
 
   # Uncomment the following section to add custom fonts
   # fonts:

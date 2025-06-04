@@ -1,4 +1,5 @@
 using AppTiengAnhBE.Domain.Entities;
+using AppTiengAnhBE.Models.SystemModel;
 using Dapper;
 using System.Data;
 
@@ -19,10 +20,10 @@ namespace AppTiengAnhBE.Repositories.LessonRepository.LessonsCRUDRepo
             return await _db.QueryAsync<Lesson>(sql);
         }
 
-        public async Task<Lesson> GetLessonByIdAsync(int id)
+        public async Task<IEnumerable<Lesson>> GetLessonsByCategoryIdAsync(int categoryId)
         {
-            var sql = "SELECT id, category_id, title, description, order_num, created_at FROM lessons WHERE id = @Id";
-            return await _db.QueryFirstOrDefaultAsync<Lesson>(sql, new { Id = id });
+            var sql = "SELECT id, category_id, title, description, order_num, created_at FROM lessons WHERE category_id = @CategoryId";
+            return await _db.QueryAsync<Lesson>(sql, new { CategoryId = categoryId });
         }
 
         public async Task<int> CreateLessonAsync(Lesson lesson)

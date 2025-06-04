@@ -97,6 +97,39 @@ class RightSidebar extends StatelessWidget {
                 },
               ),
             ),
+            const SizedBox(height: 16),
+            // Phần hiển thị ảnh căn giữa
+           Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // tránh chiếm hết chiều dọc
+              children: [
+                Container(
+                  width: 300,  // độ dài thanh ngang nhỏ
+                  height: 4,  // độ dày thanh ngang
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade400,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(height: 8),  // khoảng cách giữa thanh ngang và ảnh
+                Image.asset(
+                  'assets/images/icon_rightbanner_2.png',
+                  width: 120,
+                ),
+                 const Text(
+                  'Cố lên, bạn đã đăng nhập được 3 ngày liên tiếp!',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromARGB(255, 109, 83, 49),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+
           ],
         ),
       ),

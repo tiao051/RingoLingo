@@ -71,4 +71,17 @@ class AppTextStyles {
     height: 1.2,
     color: AppColors.greenDark,
   );
+  static const TextStyle bodyBold = TextStyle(
+    fontFamily: 'YourFontFamily', // Replace with your font
+    fontWeight: FontWeight.bold,
+    fontSize: 16, // Example size, same as body but bold
+    color: AppColors.black, // Example color
+  );
+
+  static const TextStyle button = TextStyle(
+    fontFamily: 'YourFontFamily', // Replace with your font
+    fontWeight: FontWeight.w600, // Semi-bold is common for buttons
+    fontSize: 16, // Example size
+    color: AppColors.white, // Example color (assuming white text on colored buttons)
+  );
 }
