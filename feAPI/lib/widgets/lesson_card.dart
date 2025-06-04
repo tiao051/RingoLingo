@@ -6,12 +6,14 @@ class LessonCard extends StatelessWidget {
   final String title;
   final String description;
   final String imagePath;
+  final VoidCallback? onTap;
 
   const LessonCard({
     Key? key,
     required this.title,
     required this.description,
     required this.imagePath,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -75,7 +77,7 @@ class LessonCard extends StatelessWidget {
                           width: 200,
                           height: 60,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: onTap,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.redNormal,
                               shape: RoundedRectangleBorder(

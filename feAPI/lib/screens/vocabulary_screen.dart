@@ -10,6 +10,9 @@ import 'package:ringolingo_app/widgets/right_sidebar.dart';
 import 'package:ringolingo_app/widgets/lesson_card.dart';
 import 'package:ringolingo_app/widgets/skill_icon.dart';
 import 'package:ringolingo_app/widgets/lesson_banner.dart';
+import 'package:ringolingo_app/widgets/flippable_banner.dart';
+import 'lesson_selection_screen.dart';
+import 'package:ringolingo_app/screens/tracnghiem_screen.dart';
 
 class VocabularyScreen extends StatefulWidget {
   @override
@@ -25,9 +28,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   void initState() {
     super.initState();
     futureCategories = fetchCategories();
-  }
-
-  void onSkillTap(String skill) {
+  }  void onSkillTap(String skill) {
     setState(() {
       selectedSkill = skill;
       if (skill == 'Từ vựng') {
@@ -96,7 +97,8 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                                     decoration: InputDecoration(
                                       hintText: 'Tìm kiếm...',
                                       border: InputBorder.none,
-                                      hintStyle: TextStyle(color: AppColors.brownDark),
+                                      hintStyle:
+                                          TextStyle(color: AppColors.brownDark),
                                     ),
                                   ),
                                 ),
@@ -169,18 +171,57 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                           ),
                         ],
                       ),
-                    ),
-
-                    const SizedBox(height: 32),
-
+                    ),                    
+                      if (selectedSkill == 'Trắc nghiệm') ...[
+                      const SizedBox(height: 32),
+                      Text('Chọn bài trắc nghiệm', style: AppTextStyles.head1Bold),
+                      const SizedBox(height: 20),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            FlippableBanner(
+                              imagePath: 'assets/images/banner_bai_1.png',
+                              width: 270,
+                              height: 601,
+                              onTap: () {
+                                Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => TracNghiemScreen()));
+                              },
+                            ),
+                            const SizedBox(width: 20),
+                            FlippableBanner(
+                              imagePath: 'assets/images/banner_bai_2.png',
+                              width: 270,
+                              height: 601,
+                              onTap: () {
+                                Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => TracNghiemScreen()));
+                              },
+                            ),
+                            const SizedBox(width: 20),
+                            FlippableBanner(
+                              imagePath: 'assets/images/banner_bai_3.png',
+                              width: 270,
+                              height: 601,
+                              onTap: () {
+                                Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => TracNghiemScreen()));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ]
                     /// CONTENT AREA
-                    if (selectedSkill == 'Từ vựng') ...[
+                    else if (selectedSkill == 'Từ vựng') ...[
                       Text('Từ vựng', style: AppTextStyles.head1Bold),
                       const SizedBox(height: 20),
                       FutureBuilder<List<Category>>(
                         future: futureCategories,
                         builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return Center(child: CircularProgressIndicator());
                           } else if (snapshot.hasError) {
                             return Text('Lỗi: ${snapshot.error}');
@@ -192,6 +233,18 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                                   title: category.name,
                                   description: category.description,
                                   imagePath: getImageForCategory(category.id),
+                                  onTap: () {
+                                    print('DEBUG: category_id = \'[32m[1m[4m${category.id}\u001b[0m\'');
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            LessonSelectionScreen(
+                                          category: category,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 );
                               }).toList(),
                             );
@@ -204,7 +257,8 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                       FutureBuilder<List<Lesson>>(
                         future: futureLessons,
                         builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return Center(child: CircularProgressIndicator());
                           } else if (snapshot.hasError) {
                             return Text('Lỗi: ${snapshot.error}');
@@ -215,7 +269,8 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                                 return LessonBanner(
                                   title: lesson.title,
                                   description: lesson.description,
-                                  imagePath: 'assets/images/icon_trac_nghiem.png',
+                                  imagePath:
+                                      'assets/images/icon_trac_nghiem.png',
                                   onTap: () {
                                     print('Đã bấm vào lesson id: ${lesson.id}');
                                   },
@@ -226,9 +281,11 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                         },
                       ),
                     ] else ...[
-                      Text('Đang chọn: $selectedSkill', style: AppTextStyles.head1Bold),
+                      Text('Đang chọn: $selectedSkill',
+                          style: AppTextStyles.head1Bold),
                       const SizedBox(height: 20),
-                      Text('Chức năng "$selectedSkill" chưa được cài đặt.', style: AppTextStyles.head3Black),
+                      Text('Chức năng "$selectedSkill" chưa được cài đặt.',
+                          style: AppTextStyles.head3Black),
                     ],
                   ],
                 ),

@@ -1,4 +1,5 @@
 ﻿using AppTiengAnhBE.Domain.Entities;
+using AppTiengAnhBE.Models.SystemModel;
 using AppTiengAnhBE.Services.LessonServices.LessonsCRUDServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,9 +26,8 @@ namespace AppTiengAnhBE.Controllers.LessonsControllers
         [HttpGet("lessons/{id}")]
         public async Task<IActionResult> GetLessonById(int id)
         {
-            var lesson = await _lessonService.GetLessonByIdAsync(id);
-            if (lesson == null) return NotFound();
-            return Ok(lesson);
+            var lessons = await _lessonService.GetLessonsByCategoryIdAsync(id);
+            return Ok(lessons);
         }
 
         [HttpPost("lessons")]

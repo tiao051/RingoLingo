@@ -6,7 +6,7 @@ namespace AppTiengAnhBE.Services.LessonServices.LessonsCRUDServices
     public interface ILessonService
     {
         Task<IEnumerable<Lesson>> GetAllLessonsAsync();
-        Task<Lesson> GetLessonByIdAsync(int id);
+        Task<IEnumerable<Lesson>> GetLessonsByCategoryIdAsync(int categoryId);
         Task<int> CreateLessonAsync(Lesson lesson);
         Task<int> UpdateLessonAsync(Lesson lesson);
         Task<int> DeleteLessonAsync(int id);
@@ -23,9 +23,9 @@ namespace AppTiengAnhBE.Services.LessonServices.LessonsCRUDServices
         {
             return await _lessonRepository.GetAllLessonsAsync();
         }
-        public async Task<Lesson> GetLessonByIdAsync(int id)
+        public async Task<IEnumerable<Lesson>> GetLessonsByCategoryIdAsync(int categoryId)
         {
-            return await _lessonRepository.GetLessonByIdAsync(id);
+            return await _lessonRepository.GetLessonsByCategoryIdAsync(categoryId);
         }
         public async Task<int> CreateLessonAsync(Lesson lesson)
         {
