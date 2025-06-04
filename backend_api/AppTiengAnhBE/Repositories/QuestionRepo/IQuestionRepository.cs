@@ -6,5 +6,6 @@ namespace AppTiengAnhBE.Repositories.QuestionRepo
     {
         Task<IEnumerable<QuestionDTO>> GetQuestionsByLessonAsync(int lessonId);
         Task<IEnumerable<QuestionDTO>> GetWrongQuestionsWithAnswersAsync(int userResultId);
+        Task<IEnumerable<QuestionDTO>> GetQuestionsForLisTestByLessonAsync(int lessonId);
     }
 }

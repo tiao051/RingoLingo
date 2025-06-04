@@ -18,6 +18,11 @@ namespace AppTiengAnhBE.Services.QuestionServices
             return await _repo.GetQuestionsByLessonAsync(lessonId);
         }
 
+        public async Task<IEnumerable<QuestionDTO>> GetQuestionsForLisTestByLessonAsync(int lessonId)
+        {
+            return await _repo.GetQuestionsForLisTestByLessonAsync(lessonId);
+        }
+
         public async Task<IEnumerable<QuestionDTO>> GetWrongQuestionsWithAnswersAsync(int userResultId)
         {
             return await _repo.GetWrongQuestionsWithAnswersAsync(userResultId);

@@ -37,5 +37,12 @@ namespace AppTiengAnhBE.Controllers.QuestionsControllers
 
             return Ok(wrongQuestions);
         }
+        [HttpGet("question-for-listen/{lessonId}")]
+        public async Task<IActionResult> GetQuestionsForListeningByLesson(int lessonId)
+        {
+            Console.WriteLine("api dc goi");
+            var questions = await _questionService.GetQuestionsForLisTestByLessonAsync(lessonId);
+            return Ok(questions);
+        }
     }
 }

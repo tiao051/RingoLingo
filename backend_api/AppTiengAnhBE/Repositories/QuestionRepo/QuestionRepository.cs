@@ -17,28 +17,69 @@ namespace AppTiengAnhBE.Repositories.QuestionRepo
         public async Task<IEnumerable<QuestionDTO>> GetQuestionsByLessonAsync(int lessonId)
         {
             var sql = @"
-                WITH limited_questions AS (
-                    SELECT q.id, q.question AS QuestionText, qt.type_name AS TypeName
-                    FROM question q
-                    JOIN question_types qt ON q.question_type_id = qt.id
-                    WHERE q.lesson_id = @LessonId
-                    ORDER BY q.id DESC
-                    LIMIT 5
-                )
-                SELECT * FROM limited_questions
-                ORDER BY id; -- đảo ngược lại thứ tự tăng dần nếu cần
+        WITH paged_questions AS (
+            SELECT q.id, q.question AS QuestionText, qt.type_name AS TypeName
+            FROM question q
+            JOIN question_types qt ON q.question_type_id = qt.id
+            WHERE q.lesson_id = @LessonId
+            ORDER BY q.id DESC
+            OFFSET 5
+            LIMIT 5
+        )
+        SELECT * FROM paged_questions
+        ORDER BY id;
 
-                SELECT qa.id, qa.question_id AS QuestionId, qa.answer_text AS AnswerText, qa.is_correct AS isCorrect
-                FROM question_answers qa
-                WHERE qa.question_id IN (
-                    SELECT id FROM (
-                        SELECT q.id
-                        FROM question q
-                        WHERE q.lesson_id = @LessonId
-                        ORDER BY q.id DESC
-                        LIMIT 5
-                    ) AS limited
-                );";
+        SELECT qa.id, qa.question_id AS QuestionId, qa.answer_text AS AnswerText, qa.is_correct AS isCorrect
+        FROM question_answers qa
+        WHERE qa.question_id IN (
+            SELECT id FROM (
+                SELECT q.id
+                FROM question q
+                WHERE q.lesson_id = @LessonId
+                ORDER BY q.id DESC
+                OFFSET 5
+                LIMIT 5
+            ) AS filtered
+        );";
+
+            using var multi = await _db.QueryMultipleAsync(sql, new { LessonId = lessonId });
+
+            var questions = (await multi.ReadAsync<QuestionDTO>()).ToList();
+            var answers = (await multi.ReadAsync<AnswerDTO>()).ToList();
+
+            foreach (var q in questions)
+            {
+                q.AnswersText = answers.Where(a => a.QuestionId == q.Id).ToList();
+            }
+
+            return questions;
+        }
+
+        public async Task<IEnumerable<QuestionDTO>> GetQuestionsForLisTestByLessonAsync(int lessonId)
+        {
+            var sql = @"
+    WITH latest_questions AS (
+        SELECT q.id, q.question AS QuestionText, qt.type_name AS TypeName
+        FROM question q
+        JOIN question_types qt ON q.question_type_id = qt.id
+        WHERE q.lesson_id = @LessonId
+        ORDER BY q.id DESC
+        LIMIT 5
+    )
+    SELECT * FROM latest_questions
+    ORDER BY id; -- sắp xếp lại theo thứ tự tăng dần nếu cần
+
+    SELECT qa.id, qa.question_id AS QuestionId, qa.answer_text AS AnswerText, qa.is_correct AS isCorrect
+    FROM question_answers qa
+    WHERE qa.question_id IN (
+        SELECT id FROM (
+            SELECT q.id
+            FROM question q
+            WHERE q.lesson_id = @LessonId
+            ORDER BY q.id DESC
+            LIMIT 5
+        ) AS filtered
+    );";
 
             using var multi = await _db.QueryMultipleAsync(sql, new { LessonId = lessonId });
 

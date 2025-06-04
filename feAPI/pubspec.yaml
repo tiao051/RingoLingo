@@ -24,7 +24,7 @@ flutter:
   
   assets:
     - assets/images/
-    - assets/audio/
+    - assets/audio/speaking_animal.mp3
     - assets/images/dong_vat/
     - assets/images/thuc_an/
     - assets/images/gia_dinh/ # Khai báo toàn bộ thư mục assets

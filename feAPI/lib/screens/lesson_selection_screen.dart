@@ -44,7 +44,7 @@ class _LessonSelectionScreenState extends State<LessonSelectionScreen> {
             /// LEFT SIDEBAR - 20%
             Expanded(
               flex: 2,
-              child: LeftSidebar(),
+              child: LeftSidebar(activeTab: 'Khóa học'),
             ),
 
             const SizedBox(width: 16),
