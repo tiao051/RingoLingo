@@ -278,6 +278,8 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
         recordingTime = 0.0;
         playbackTime = 0.0;
         _audioUrl = null;
+        _recognizedText = ''; // Clear recognized text
+        _backendResult = ''; // Clear backend result khi sang câu mới
       });
 
       _progressController.forward();
@@ -296,6 +298,8 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
         recordingTime = 0.0;
         playbackTime = 0.0;
         _audioUrl = null;
+        _recognizedText = ''; // Clear recognized text
+        _backendResult = ''; // Clear backend result
       });
 
       _slideController.reset();
@@ -386,6 +390,8 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
                             hasRecorded = false;
                             recordingTime = 0.0;
                             playbackTime = 0.0;
+                            _recognizedText = '';
+                            _backendResult = '';
                           });
                         },
                         style: ElevatedButton.styleFrom(
@@ -462,19 +468,20 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
         sendData: formData,
       );
 
-      print('[DEBUG] Backend response: [38;5;2m[1m[4m[3m[9m${request.responseText}[0m');
+      print(
+          '[DEBUG] Backend response: [38;5;2m[1m[4m[3m[9m${request.responseText}[0m');
       // Parse JSON và setState để hiển thị kết quả
       try {
-  final json = request.responseText;
-  if (json != null && json.isNotEmpty) {
-    final decoded = jsonDecode(json); // dùng jsonDecode từ dart:convert
-    setState(() {
-      _backendResult = decoded['text']?.toString() ?? '';
-    });
-  }
-} catch (e) {
-  print('[DEBUG] Lỗi parse JSON backend: $e');
-}
+        final json = request.responseText;
+        if (json != null && json.isNotEmpty) {
+          final decoded = jsonDecode(json); // dùng jsonDecode từ dart:convert
+          setState(() {
+            _backendResult = decoded['text']?.toString() ?? '';
+          });
+        }
+      } catch (e) {
+        print('[DEBUG] Lỗi parse JSON backend: $e');
+      }
     } catch (e) {
       print('[DEBUG] Upload error: $e');
     }
@@ -490,85 +497,44 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
       body: SafeArea(
         child: Column(
           children: [
-            // Header with back button and progress - Fixed height
+            // Header with back button and title - Fixed height
             Container(
               padding: const EdgeInsets.all(20),
-              child: Column(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.9),
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.brownNormal.withOpacity(0.2),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: const Icon(Icons.arrow_back_rounded),
-                          color: AppColors.brownDark,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.lessonTitle,
-                              style: AppTextStyles.head2Bold.copyWith(
-                                color: AppColors.brownDark,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Bài ${currentExerciseIndex + 1}/${widget.exercises.length}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    color: AppColors.brownNormal,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  // Progress bar
                   Container(
-                    height: 8,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(4),
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.brownNormal.withOpacity(0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                    child: AnimatedBuilder(
-                      animation: _progressAnimation,
-                      builder: (context, child) {
-                        return FractionallySizedBox(
-                          alignment: Alignment.centerLeft,
-                          widthFactor: progress,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.green.shade400,
-                                  Colors.green.shade600
-                                ],
-                              ),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
-                        );
-                      },
+                    child: IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.arrow_back_rounded),
+                      color: AppColors.brownDark,
                     ),
+                  ),
+                  const SizedBox(width: 16),
+                  Text(
+                    'Pronunciation Practice: Animals',
+                    style: AppTextStyles.head2Bold.copyWith(
+                      color: AppColors.brownDark,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  // Bài số
+                  Text(
+                    'Bài ${currentExerciseIndex + 1}/${widget.exercises.length}',
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: AppColors.brownNormal,
+                        ),
                   ),
                 ],
               ),
@@ -991,9 +957,11 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
 
                         // Navigation buttons
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             if (currentExerciseIndex > 0)
-                              Expanded(
+                              SizedBox(
+                                width: 140,
                                 child: ElevatedButton.icon(
                                   onPressed: _previousExercise,
                                   icon: const Icon(Icons.arrow_back),
@@ -1011,8 +979,8 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
                               ),
                             if (currentExerciseIndex > 0)
                               const SizedBox(width: 12),
-                            Expanded(
-                              flex: currentExerciseIndex == 0 ? 1 : 1,
+                            SizedBox(
+                              width: 160,
                               child: AnimatedBuilder(
                                 animation: _bounceAnimation,
                                 builder: (context, child) {
@@ -1054,10 +1022,10 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
                                   );
                                 },
                               ),
-                            ), // Đóng Expanded
-                          ], // Đóng Row
-                        ), // Đóng Column
-                        // Add some bottom padding for better scrolling experience
+                            ),
+                          ],
+                        ),
+// Add some bottom padding for better scrolling experience
                         const SizedBox(height: 40),
                       ],
                     ),
