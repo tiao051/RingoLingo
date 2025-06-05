@@ -173,7 +173,7 @@ class _TracNghiemScreenState extends State<TracNghiemScreen> {
 
     // Play audio feedback based on answer correctness
     if (isCorrect) {
-      playAudio('correct.mp3');
+      playAudio('correct_fixed.mp3');
     } else {
       playAudio('wrong.mp3');
     }
