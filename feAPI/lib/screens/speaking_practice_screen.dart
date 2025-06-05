@@ -1,55 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:ringolingo_app/utils/color.dart';
 import 'package:ringolingo_app/utils/text_styles.dart';
-import 'package:ringolingo_app/services/recorder.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
-
-// // Model cho bài luyện nói
-class SpeakingLesson {
-  final int id;
-  final String title;
-  final String description;
-  final List<SpeakingTask> tasks;
-  final int categoryId;
-
-  SpeakingLesson({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.tasks,
-    required this.categoryId,
-  });
-}
-
-class SpeakingTask {
-  final String id;
-  final String type; // 'repeat', 'describe', 'conversation'
-  final String instruction;
-  final String? targetText;
-  final String? imageUrl;
-  final String? audioUrl;
-  final List<String>? keywords;
-  String? userResponse;
-  bool isCompleted;
-
-  SpeakingTask({
-    required this.id,
-    required this.type,
-    required this.instruction,
-    this.targetText,
-    this.imageUrl,
-    this.audioUrl,
-    this.keywords,
-    this.userResponse,
-    this.isCompleted = false,
-  });
-}
+import 'dart:math';
 
 class SpeakingPracticeScreen extends StatefulWidget {
-  final SpeakingLesson lesson;
+  final String lessonTitle;
+  final int lessonId;
+  final List<SpeakingExercise> exercises;
 
-  const SpeakingPracticeScreen({Key? key, required this.lesson}) : super(key: key);
+  const SpeakingPracticeScreen({
+    Key? key,
+    required this.lessonTitle,
+    required this.lessonId,
+    required this.exercises,
+  }) : super(key: key);
 
   @override
   _SpeakingPracticeScreenState createState() => _SpeakingPracticeScreenState();
@@ -57,973 +22,921 @@ class SpeakingPracticeScreen extends StatefulWidget {
 
 class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
     with TickerProviderStateMixin {
-  final AudioPlayer _audioPlayer = AudioPlayer();
-  int currentTaskIndex = 0;
-  bool isRecording = false;
-  bool isPlayingAudio = false;
-  Timer? _recordingTimer;
-  int recordingDuration = 0;
-  String recordingStatus = '';
-  
+  // Animation Controllers
   late AnimationController _pulseController;
   late AnimationController _waveController;
   late AnimationController _progressController;
+  late AnimationController _slideController;
+  late AnimationController _bounceController;
+
+  // Animations
   late Animation<double> _pulseAnimation;
   late Animation<double> _waveAnimation;
   late Animation<double> _progressAnimation;
+  late Animation<Offset> _slideAnimation;
+  late Animation<double> _bounceAnimation;
+
+  // State variables
+  int currentExerciseIndex = 0;
+  bool isRecording = false;
+  bool isPlaying = false;
+  bool hasRecorded = false;
+  double recordingTime = 0.0;
+  double playbackTime = 0.0;
+  Timer? _recordingTimer;
+  Timer? _playbackTimer;
+
+  // Audio visualization
+  List<double> audioLevels = List.generate(30, (index) => 0.0);
+  Timer? _audioLevelTimer;
 
   @override
   void initState() {
     super.initState();
     _initializeAnimations();
-    _setupAudioPlayer();
+    _slideController.forward();
   }
 
   void _initializeAnimations() {
     _pulseController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
+
     _waveController = AnimationController(
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
+
     _progressController = AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 800),
       vsync: this,
     );
 
-    _pulseAnimation = Tween<double>(begin: 0.8, end: 1.2).animate(
+    _slideController = AnimationController(
+      duration: const Duration(milliseconds: 1200),
+      vsync: this,
+    );
+
+    _bounceController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+
+    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.3).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
+
     _waveAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _waveController, curve: Curves.easeInOut),
+      CurvedAnimation(parent: _waveController, curve: Curves.linear),
     );
+
     _progressAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _progressController, curve: Curves.easeInOut),
+      CurvedAnimation(parent: _progressController, curve: Curves.easeOutCubic),
     );
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _slideController,
+      curve: Curves.easeOutCubic,
+    ));
+
+    _bounceAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _bounceController, curve: Curves.elasticOut),
+    );
+
+    _waveController.repeat();
   }
 
-  void _setupAudioPlayer() {
-    _audioPlayer.onPlayerStateChanged.listen((state) {
-      if (mounted) {
-        setState(() {
-          isPlayingAudio = state == PlayerState.playing;
-        });
-      }
-    });
+  @override
+  void dispose() {
+    _pulseController.dispose();
+    _waveController.dispose();
+    _progressController.dispose();
+    _slideController.dispose();
+    _bounceController.dispose();
+    _recordingTimer?.cancel();
+    _playbackTimer?.cancel();
+    _audioLevelTimer?.cancel();
+    super.dispose();
   }
 
-  Future<bool> _onWillPop() async {
-    return await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: AppColors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(
-          'Thoát bài luyện nói?',
-          style: AppTextStyles.head3Bold.copyWith(color: AppColors.brownDark),
-        ),
-        content: Text(
-          'Bạn có chắc chắn muốn thoát? Mọi kết quả sẽ không được lưu.',
-          style: AppTextStyles.body.copyWith(color: AppColors.brownNormal),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(
-              'Hủy',
-              style: AppTextStyles.bodyBold.copyWith(color: AppColors.brownNormal),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.redNormal,
-              foregroundColor: AppColors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            ),
-            child: Text(
-              'Thoát',
-              style: AppTextStyles.bodyBold.copyWith(color: AppColors.white),
-            ),
-          ),
-        ],
-      ),
-    ) ?? false;
-  }
-
-  Future<void> _playTargetAudio() async {
-    final currentTask = widget.lesson.tasks[currentTaskIndex];
-    if (currentTask.audioUrl != null) {
-      try {
-        String path = currentTask.audioUrl!;
-        if (path.startsWith('assets/')) {
-          path = path.substring('assets/'.length);
-        }
-        if (path.startsWith('/')) {
-          path = path.substring(1);
-        }
-        await _audioPlayer.play(AssetSource(path));
-      } catch (e) {
-        print("Error playing audio: $e");
-      }
-    }
-  }
-
-  Future<void> _startRecording() async {
-    if (isRecording) return;
-    
+  void _startRecording() {
     setState(() {
       isRecording = true;
-      recordingDuration = 0;
-      recordingStatus = 'Đang ghi âm...';
+      recordingTime = 0.0;
+      hasRecorded = false;
     });
 
     _pulseController.repeat(reverse: true);
-    _waveController.repeat();
+    _startAudioVisualization();
 
-    try {
-      await startRecording();
-      _recordingTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        setState(() {
-          recordingDuration++;
-        });
+    _recordingTimer =
+        Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      setState(() {
+        recordingTime += 0.1;
+        if (recordingTime >= 30.0) {
+          // Max 30 seconds
+          _stopRecording();
+        }
       });
-    } catch (e) {
-      print("Error starting recording: $e");
-      _stopRecording();
-    }
+    });
   }
 
-  Future<void> _stopRecording() async {
-    if (!isRecording) return;
-
+  void _stopRecording() {
     setState(() {
       isRecording = false;
-      recordingStatus = 'Đã hoàn thành ghi âm';
+      hasRecorded = true;
     });
 
     _pulseController.stop();
-    _waveController.stop();
+    _pulseController.reset();
     _recordingTimer?.cancel();
+    _audioLevelTimer?.cancel();
+    _bounceController.forward();
 
-    try {
-      await stopRecordingAndSend();
-      // Mark current task as completed
-      widget.lesson.tasks[currentTaskIndex].isCompleted = true;
-      _progressController.forward();
-    } catch (e) {
-      print("Error stopping recording: $e");
-    }
+    // Reset audio levels
+    setState(() {
+      audioLevels = List.generate(30, (index) => 0.0);
+    });
   }
 
-  void _nextTask() {
-    if (currentTaskIndex < widget.lesson.tasks.length - 1) {
+  void _startPlayback() {
+    if (!hasRecorded) return;
+
+    setState(() {
+      isPlaying = true;
+      playbackTime = 0.0;
+    });
+
+    _startAudioVisualization();
+
+    _playbackTimer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       setState(() {
-        currentTaskIndex++;
-        recordingStatus = '';
+        playbackTime += 0.1;
+        if (playbackTime >= recordingTime) {
+          _stopPlayback();
+        }
       });
-      _progressController.reset();
+    });
+  }
+
+  void _stopPlayback() {
+    setState(() {
+      isPlaying = false;
+    });
+
+    _playbackTimer?.cancel();
+    _audioLevelTimer?.cancel();
+
+    // Reset audio levels
+    setState(() {
+      audioLevels = List.generate(30, (index) => 0.0);
+    });
+  }
+
+  void _startAudioVisualization() {
+    _audioLevelTimer =
+        Timer.periodic(const Duration(milliseconds: 50), (timer) {
+      setState(() {
+        for (int i = 0; i < audioLevels.length; i++) {
+          audioLevels[i] =
+              Random().nextDouble() * (isRecording || isPlaying ? 1.0 : 0.0);
+        }
+      });
+    });
+  }
+
+  void _nextExercise() {
+    if (currentExerciseIndex < widget.exercises.length - 1) {
+      setState(() {
+        currentExerciseIndex++;
+        hasRecorded = false;
+        recordingTime = 0.0;
+        playbackTime = 0.0;
+      });
+
+      _progressController.forward();
+      _slideController.reset();
+      _slideController.forward();
     } else {
       _showCompletionDialog();
     }
   }
 
-  void _previousTask() {
-    if (currentTaskIndex > 0) {
+  void _previousExercise() {
+    if (currentExerciseIndex > 0) {
       setState(() {
-        currentTaskIndex--;
-        recordingStatus = '';
+        currentExerciseIndex--;
+        hasRecorded = false;
+        recordingTime = 0.0;
+        playbackTime = 0.0;
       });
-      _progressController.reset();
+
+      _slideController.reset();
+      _slideController.forward();
     }
   }
 
   void _showCompletionDialog() {
-    final completedTasks = widget.lesson.tasks.where((task) => task.isCompleted).length;
-    final totalTasks = widget.lesson.tasks.length;
-    final percentage = (completedTasks / totalTasks) * 100;
-
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        backgroundColor: AppColors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        contentPadding: const EdgeInsets.all(24),
-        content: Container(
-          width: 400,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Success Icon
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Colors.green.shade100,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.check_circle,
-                  size: 50,
-                  color: Colors.green.shade600,
-                ),
+      builder: (BuildContext context) {
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.green.shade50, Colors.green.shade100],
               ),
-              const SizedBox(height: 16),
-              
-              // Title
-              Text(
-                'Chúc mừng!',
-                style: AppTextStyles.head2Bold.copyWith(color: AppColors.brownDark),
-              ),
-              const SizedBox(height: 8),
-              
-              // Stats
-              Text(
-                'Bạn đã hoàn thành ${percentage.toStringAsFixed(0)}% bài luyện nói',
-                style: AppTextStyles.body.copyWith(color: AppColors.brownNormal),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              
-              // Progress indicator
-              Container(
-                height: 6,
-                decoration: BoxDecoration(
-                  color: AppColors.brownLight.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(3),
-                ),
-                child: FractionallySizedBox(
-                  alignment: Alignment.centerLeft,
-                  widthFactor: percentage / 100,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.green.shade600,
-                      borderRadius: BorderRadius.circular(3),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.green.shade400, Colors.green.shade600],
                     ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.check_rounded,
+                    color: Colors.white,
+                    size: 40,
                   ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              
-              // Buttons
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                      },
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: AppColors.brownNormal),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                const SizedBox(height: 16),
+                Text(
+                  'Chúc mừng!',
+                  style: AppTextStyles.head2Bold.copyWith(
+                    color: Colors.green.shade700,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Bạn đã hoàn thành bài luyện nói',
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Colors.green.shade600,
                       ),
-                      child: Text(
-                        'Hoàn thành',
-                        style: AppTextStyles.bodyBold.copyWith(color: AppColors.brownNormal),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        },
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(color: Colors.green.shade300),
+                          ),
+                        ),
+                        child: Text(
+                          'Về trang chủ',
+                          style: TextStyle(color: Colors.green.shade600),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        setState(() {
-                          currentTaskIndex = 0;
-                          for (var task in widget.lesson.tasks) {
-                            task.isCompleted = false;
-                          }
-                          recordingStatus = '';
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.brownDark,
-                        foregroundColor: AppColors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                      ),
-                      child: Text(
-                        'Luyện lại',
-                        style: AppTextStyles.bodyBold.copyWith(color: AppColors.white),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          setState(() {
+                            currentExerciseIndex = 0;
+                            hasRecorded = false;
+                            recordingTime = 0.0;
+                            playbackTime = 0.0;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green.shade500,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text(
+                          'Luyện lại',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
-  }
-
-  String _formatDuration(int seconds) {
-    final minutes = seconds ~/ 60;
-    final remainingSeconds = seconds % 60;
-    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
-  }
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    _pulseController.dispose();
-    _waveController.dispose();
-    _progressController.dispose();
-    _recordingTimer?.cancel();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        backgroundColor: const Color(0xFFD5B893),
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Main Content
-              Expanded(
-                flex: 6,
-                child: Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      // Header
-                      _buildHeader(),
-                      const SizedBox(height: 20),
-                      
-                      // Progress Bar
-                      _buildProgressBar(),
-                      const SizedBox(height: 24),
-                      
-                      // Main Content Area
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: _buildTaskContent(),
-                        ),
-                      ),
-                      
-                      // Bottom Controls
-                      _buildBottomControls(),
-                    ],
-                  ),
-                ),
-              ),
-              
-              const SizedBox(width: 20),
-              
-              // Right Sidebar
-              Expanded(
-                flex: 2,
-                child: _buildRightSidebar(),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+    final currentExercise = widget.exercises[currentExerciseIndex];
+    final progress = (currentExerciseIndex + 1) / widget.exercises.length;
 
-  Widget _buildHeader() {
-    return Row(
-      children: [
-        IconButton(
-          icon: Icon(Icons.arrow_back, color: AppColors.brownDark),
-          onPressed: () async {
-            final shouldPop = await _onWillPop();
-            if (shouldPop) {
-              Navigator.pop(context);
-            }
-          },
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.lesson.title,
-                style: AppTextStyles.head2Bold.copyWith(color: AppColors.brownDark),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                widget.lesson.description,
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.brownNormal.withOpacity(0.8),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildProgressBar() {
-    final progress = (currentTaskIndex + 1) / widget.lesson.tasks.length;
-    
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+      backgroundColor: const Color(0xFFD5B893),
+      body: SafeArea(
+        child: Column(
           children: [
-            Text(
-              'Tiến độ',
-              style: AppTextStyles.bodyBold.copyWith(color: AppColors.brownDark),
-            ),
-            Text(
-              '${currentTaskIndex + 1}/${widget.lesson.tasks.length}',
-              style: AppTextStyles.body.copyWith(color: AppColors.brownNormal),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Container(
-          height: 8,
-          decoration: BoxDecoration(
-            color: AppColors.brownLight.withOpacity(0.3),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: FractionallySizedBox(
-            alignment: Alignment.centerLeft,
-            widthFactor: progress,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.brownNormal, AppColors.brownDark],
-                ),
-                borderRadius: BorderRadius.circular(4),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTaskContent() {
-    final currentTask = widget.lesson.tasks[currentTaskIndex];
-    
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // Task Type Badge
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(
-            color: _getTaskTypeColor(currentTask.type).withOpacity(0.1),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: _getTaskTypeColor(currentTask.type).withOpacity(0.3),
-            ),
-          ),
-          child: Text(
-            _getTaskTypeName(currentTask.type),
-            style: AppTextStyles.bodyBold.copyWith(
-              color: _getTaskTypeColor(currentTask.type),
-            ),
-          ),
-        ),
-        const SizedBox(height: 24),
-        
-        // Instruction
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: AppColors.brownLight.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: AppColors.brownLight.withOpacity(0.3),
-            ),
-          ),
-          child: Text(
-            currentTask.instruction,
-            style: AppTextStyles.head3Bold.copyWith(color: AppColors.brownDark),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        const SizedBox(height: 24),
-        
-        // Task-specific content
-        if (currentTask.type == 'repeat' && currentTask.targetText != null) ...[
-          _buildRepeatTask(currentTask),
-        ] else if (currentTask.type == 'describe' && currentTask.imageUrl != null) ...[
-          _buildDescribeTask(currentTask),
-        ] else if (currentTask.type == 'conversation') ...[
-          _buildConversationTask(currentTask),
-        ],
-        
-        const SizedBox(height: 32),
-        
-        // Recording Section
-        _buildRecordingSection(),
-      ],
-    );
-  }
-
-  Widget _buildRepeatTask(SpeakingTask task) {
-    return Column(
-      children: [
-        // Play target audio button
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.brownNormal.withOpacity(0.3)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 5,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              IconButton(
-                onPressed: _playTargetAudio,
-                icon: Icon(
-                  isPlayingAudio ? Icons.pause_circle_filled : Icons.play_circle_filled,
-                  size: 64,
-                  color: AppColors.brownDark,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Nghe và lặp lại',
-                style: AppTextStyles.bodyBold.copyWith(color: AppColors.brownDark),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        
-        // Target text
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.brownLight.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Text(
-            task.targetText!,
-            style: AppTextStyles.head3.copyWith(color: AppColors.brownDark),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDescribeTask(SpeakingTask task) {
-    return Column(
-      children: [
-        // Image to describe
-        Container(
-          width: 300,
-          height: 200,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              task.imageUrl!,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.brownLight.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.image_outlined,
-                          size: 48,
-                          color: AppColors.brownDark.withOpacity(0.5),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Hình ảnh không khả dụng',
-                          style: AppTextStyles.body.copyWith(
-                            color: AppColors.brownDark.withOpacity(0.5),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-        
-        if (task.keywords != null && task.keywords!.isNotEmpty) ...[
-          const SizedBox(height: 16),
-          Text(
-            'Gợi ý từ khóa:',
-            style: AppTextStyles.bodyBold.copyWith(color: AppColors.brownDark),
-          ),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: task.keywords!.map((keyword) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: AppColors.brownLight.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Text(
-                keyword,
-                style: AppTextStyles.body.copyWith(color: AppColors.brownDark),
-              ),
-            )).toList(),
-          ),
-        ],
-      ],
-    );
-  }
-
-  Widget _buildConversationTask(SpeakingTask task) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.brownNormal.withOpacity(0.3)),
-      ),
-      child: Column(
-        children: [
-          Icon(
-            Icons.chat_bubble_outline,
-            size: 64,
-            color: AppColors.brownDark,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Hãy trả lời câu hỏi bằng tiếng Anh',
-            style: AppTextStyles.body.copyWith(color: AppColors.brownNormal),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRecordingSection() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: isRecording 
-            ? Colors.red.withOpacity(0.3)
-            : AppColors.brownNormal.withOpacity(0.3),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          // Recording Button
-          GestureDetector(
-            onTap: isRecording ? _stopRecording : _startRecording,
-            child: AnimatedBuilder(
-              animation: _pulseAnimation,
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: isRecording ? _pulseAnimation.value : 1.0,
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: isRecording ? Colors.red : AppColors.brownDark,
-                      boxShadow: [
-                        BoxShadow(
-                          color: (isRecording ? Colors.red : AppColors.brownDark)
-                              .withOpacity(0.3),
-                          blurRadius: isRecording ? 20 : 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Icon(
-                      isRecording ? Icons.stop : Icons.mic,
-                      size: 40,
-                      color: AppColors.white,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 16),
-          
-          // Recording Status
-          Text(
-            isRecording 
-              ? 'Đang ghi âm... ${_formatDuration(recordingDuration)}'
-              : recordingStatus.isEmpty 
-                ? 'Nhấn để bắt đầu ghi âm'
-                : recordingStatus,
-            style: AppTextStyles.bodyBold.copyWith(
-              color: isRecording ? Colors.red : AppColors.brownDark,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          
-          if (isRecording) ...[
-            const SizedBox(height: 16),
-            // Wave animation
-            AnimatedBuilder(
-              animation: _waveAnimation,
-              builder: (context, child) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(5, (index) {
-                    final delay = index * 0.2;
-                    final animationValue = (_waveAnimation.value + delay) % 1.0;
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 2),
-                      height: 20 + (20 * animationValue),
-                      width: 4,
-                      decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    );
-                  }),
-                );
-              },
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBottomControls() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.brownLight.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          // Previous Button
-          if (currentTaskIndex > 0)
-            Expanded(
-              child: OutlinedButton.icon(
-                onPressed: _previousTask,
-                icon: Icon(Icons.arrow_back, color: AppColors.brownNormal),
-                label: Text(
-                  'Trước',
-                  style: AppTextStyles.bodyBold.copyWith(color: AppColors.brownNormal),
-                ),
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: AppColors.brownNormal),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                ),
-              ),
-            ),
-          
-          if (currentTaskIndex > 0) const SizedBox(width: 16),
-          
-          // Next/Complete Button
-          Expanded(
-            flex: 2,
-            child: ElevatedButton.icon(
-              onPressed: widget.lesson.tasks[currentTaskIndex].isCompleted ? _nextTask : null,
-              icon: Icon(
-                currentTaskIndex == widget.lesson.tasks.length - 1 
-                  ? Icons.check_circle 
-                  : Icons.arrow_forward,
-                color: AppColors.white,
-              ),
-              label: Text(
-                currentTaskIndex == widget.lesson.tasks.length - 1 
-                  ? 'Hoàn thành' 
-                  : 'Tiếp theo',
-                style: AppTextStyles.bodyBold.copyWith(color: AppColors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: widget.lesson.tasks[currentTaskIndex].isCompleted 
-                  ? AppColors.brownDark 
-                  : AppColors.brownNormal.withOpacity(0.5),
-                foregroundColor: AppColors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                padding: const EdgeInsets.symmetric(vertical: 12),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRightSidebar() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Danh sách bài tập',
-            style: AppTextStyles.head3Bold.copyWith(color: AppColors.brownDark),
-          ),
-          const SizedBox(height: 16),
-          
-          Expanded(
-            child: ListView.builder(
-              itemCount: widget.lesson.tasks.length,
-              itemBuilder: (context, index) {
-                final task = widget.lesson.tasks[index];
-                final isCurrentTask = index == currentTaskIndex;
-                
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: isCurrentTask 
-                      ? AppColors.brownDark.withOpacity(0.1)
-                      : task.isCompleted 
-                        ? Colors.green.withOpacity(0.1)
-                        : AppColors.brownLight.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: isCurrentTask 
-                        ? AppColors.brownDark
-                        : task.isCompleted 
-                          ? Colors.green
-                          : AppColors.brownLight,
-                    ),
-                  ),
-                  child: Row(
+            // Header with back button and progress - Fixed height
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Row(
                     children: [
                       Container(
-                        width: 24,
-                        height: 24,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: task.isCompleted 
-                            ? Colors.green 
-                            : isCurrentTask 
-                              ? AppColors.brownDark
-                              : AppColors.brownLight,
+                          color: Colors.white.withOpacity(0.9),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.brownNormal.withOpacity(0.2),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Center(
-                          child: task.isCompleted 
-                            ? Icon(Icons.check, size: 16, color: AppColors.white)
-                            : Text(
-                                '${index + 1}',
-                                style: AppTextStyles.body.copyWith(
-                                  color: AppColors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                        child: IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(Icons.arrow_back_rounded),
+                          color: AppColors.brownDark,
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 16),
                       Expanded(
-                        child: Text(
-                          _getTaskTypeName(task.type),
-                          style: AppTextStyles.body.copyWith(
-                            color: AppColors.brownDark,
-                            fontWeight: isCurrentTask ? FontWeight.bold : FontWeight.normal,
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.lessonTitle,
+                              style: AppTextStyles.head2Bold.copyWith(
+                                color: AppColors.brownDark,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Bài ${currentExerciseIndex + 1}/${widget.exercises.length}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    color: AppColors.brownNormal,
+                                  ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                );
-              },
+                  const SizedBox(height: 16),
+                  // Progress bar
+                  Container(
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: AnimatedBuilder(
+                      animation: _progressAnimation,
+                      builder: (context, child) {
+                        return FractionallySizedBox(
+                          alignment: Alignment.centerLeft,
+                          widthFactor: progress,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.green.shade400,
+                                  Colors.green.shade600
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+
+            // Scrollable content
+            Expanded(
+              child: SlideTransition(
+                position: _slideAnimation,
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(20),
+                  child: Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.brownNormal.withOpacity(0.15),
+                          blurRadius: 20,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Exercise instruction
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.blue.shade50,
+                                Colors.blue.shade100,
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: Colors.blue.shade200,
+                              width: 1,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue.shade500,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: const Icon(
+                                      Icons.lightbulb_outline,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Text(
+                                    'Hướng dẫn',
+                                    style: AppTextStyles.head3Bold.copyWith(
+                                      color: Colors.blue.shade700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                currentExercise.instruction,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: Colors.blue.shade600,
+                                      height: 1.5,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const SizedBox(height: 24),
+
+                        // Text to practice
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                AppColors.brownLight.withOpacity(0.1),
+                                AppColors.brownLight.withOpacity(0.2),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: AppColors.brownNormal.withOpacity(0.3),
+                              width: 1,
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.format_quote,
+                                color: AppColors.brownNormal,
+                                size: 32,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                currentExercise.textToPractice,
+                                style: AppTextStyles.head3Bold.copyWith(
+                                  color: AppColors.brownDark,
+                                  height: 1.6,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const SizedBox(height: 32),
+
+                        // Audio visualization
+                        if (isRecording || isPlaying) ...[
+                          Container(
+                            height: 80,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: audioLevels.map((level) {
+                                return AnimatedContainer(
+                                  duration: const Duration(milliseconds: 100),
+                                  width: 4,
+                                  height: 20 + (level * 40),
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter,
+                                      colors: isRecording
+                                          ? [
+                                              Colors.red.shade400,
+                                              Colors.red.shade600
+                                            ]
+                                          : [
+                                              Colors.blue.shade400,
+                                              Colors.blue.shade600
+                                            ],
+                                    ),
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+
+                        // Recording controls
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              // Timer
+                              Text(
+                                isRecording
+                                    ? '${recordingTime.toStringAsFixed(1)}s'
+                                    : isPlaying
+                                        ? '${playbackTime.toStringAsFixed(1)}s / ${recordingTime.toStringAsFixed(1)}s'
+                                        : hasRecorded
+                                            ? 'Đã ghi ${recordingTime.toStringAsFixed(1)}s'
+                                            : 'Sẵn sàng ghi âm',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      color: AppColors.brownNormal,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                              const SizedBox(height: 20),
+
+                              // Control buttons
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  // Play button
+                                  AnimatedOpacity(
+                                    duration: const Duration(milliseconds: 300),
+                                    opacity: hasRecorded ? 1.0 : 0.5,
+                                    child: Container(
+                                      width: 60,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: hasRecorded
+                                              ? [
+                                                  Colors.blue.shade400,
+                                                  Colors.blue.shade600
+                                                ]
+                                              : [
+                                                  Colors.grey.shade300,
+                                                  Colors.grey.shade400
+                                                ],
+                                        ),
+                                        shape: BoxShape.circle,
+                                        boxShadow: hasRecorded && !isPlaying
+                                            ? [
+                                                BoxShadow(
+                                                  color: Colors.blue
+                                                      .withOpacity(0.3),
+                                                  blurRadius: 10,
+                                                  offset: const Offset(0, 4),
+                                                ),
+                                              ]
+                                            : [],
+                                      ),
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: hasRecorded && !isRecording
+                                              ? (isPlaying
+                                                  ? _stopPlayback
+                                                  : _startPlayback)
+                                              : null,
+                                          borderRadius: BorderRadius.circular(30),
+                                          child: Icon(
+                                            isPlaying
+                                                ? Icons.stop
+                                                : Icons.play_arrow,
+                                            color: Colors.white,
+                                            size: 30,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  // Record button
+                                  AnimatedBuilder(
+                                    animation: _pulseAnimation,
+                                    builder: (context, child) {
+                                      return Transform.scale(
+                                        scale: isRecording
+                                            ? _pulseAnimation.value
+                                            : 1.0,
+                                        child: Container(
+                                          width: 80,
+                                          height: 80,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: isRecording
+                                                  ? [
+                                                      Colors.red.shade400,
+                                                      Colors.red.shade600
+                                                    ]
+                                                  : [
+                                                      Colors.green.shade400,
+                                                      Colors.green.shade600
+                                                    ],
+                                            ),
+                                            shape: BoxShape.circle,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: (isRecording
+                                                        ? Colors.red
+                                                        : Colors.green)
+                                                    .withOpacity(0.4),
+                                                blurRadius: isRecording ? 20 : 15,
+                                                offset: const Offset(0, 6),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: InkWell(
+                                              onTap: isPlaying
+                                                  ? null
+                                                  : (isRecording
+                                                      ? _stopRecording
+                                                      : _startRecording),
+                                              borderRadius:
+                                                  BorderRadius.circular(40),
+                                              child: Icon(
+                                                isRecording
+                                                    ? Icons.stop
+                                                    : Icons.mic,
+                                                color: Colors.white,
+                                                size: 36,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+
+                                  // Reset button
+                                  AnimatedOpacity(
+                                    duration: const Duration(milliseconds: 300),
+                                    opacity: hasRecorded ? 1.0 : 0.5,
+                                    child: Container(
+                                      width: 60,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: hasRecorded
+                                              ? [
+                                                  Colors.orange.shade400,
+                                                  Colors.orange.shade600
+                                                ]
+                                              : [
+                                                  Colors.grey.shade300,
+                                                  Colors.grey.shade400
+                                                ],
+                                        ),
+                                        shape: BoxShape.circle,
+                                        boxShadow: hasRecorded &&
+                                                !isRecording &&
+                                                !isPlaying
+                                            ? [
+                                                BoxShadow(
+                                                  color: Colors.orange
+                                                      .withOpacity(0.3),
+                                                  blurRadius: 10,
+                                                  offset: const Offset(0, 4),
+                                                ),
+                                              ]
+                                            : [],
+                                      ),
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: hasRecorded &&
+                                                  !isRecording &&
+                                                  !isPlaying
+                                              ? () {
+                                                  setState(() {
+                                                    hasRecorded = false;
+                                                    recordingTime = 0.0;
+                                                    playbackTime = 0.0;
+                                                    audioLevels = List.generate(
+                                                        30, (index) => 0.0);
+                                                  });
+                                                }
+                                              : null,
+                                          borderRadius: BorderRadius.circular(30),
+                                          child: const Icon(
+                                            Icons.refresh,
+                                            color: Colors.white,
+                                            size: 30,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        // Navigation buttons
+                        Row(
+                          children: [
+                            if (currentExerciseIndex > 0)
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  onPressed: _previousExercise,
+                                  icon: const Icon(Icons.arrow_back),
+                                  label: const Text('Trước'),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.grey.shade200,
+                                    foregroundColor: Colors.grey.shade700,
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 14),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            if (currentExerciseIndex > 0)
+                              const SizedBox(width: 12),
+                            Expanded(
+                              flex: currentExerciseIndex == 0 ? 1 : 1,
+                              child: AnimatedBuilder(
+                                animation: _bounceAnimation,
+                                builder: (context, child) {
+                                  return Transform.scale(
+                                    scale: hasRecorded
+                                        ? 1.0 + (_bounceAnimation.value * 0.05)
+                                        : 1.0,
+                                    child: ElevatedButton.icon(
+                                      onPressed:
+                                          hasRecorded ? _nextExercise : null,
+                                      icon: Icon(
+                                        currentExerciseIndex ==
+                                                widget.exercises.length - 1
+                                            ? Icons.check_rounded
+                                            : Icons.arrow_forward,
+                                      ),
+                                      label: Text(
+                                        currentExerciseIndex ==
+                                                widget.exercises.length - 1
+                                            ? 'Hoàn thành'
+                                            : 'Tiếp theo',
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: hasRecorded
+                                            ? (currentExerciseIndex ==
+                                                    widget.exercises.length - 1
+                                                ? Colors.green.shade500
+                                                : Colors.blue.shade500)
+                                            : Colors.grey.shade300,
+                                        foregroundColor: Colors.white,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 14),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        
+                        // Add some bottom padding for better scrolling experience
+                        const SizedBox(height: 40),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+}
 
-  Color _getTaskTypeColor(String type) {
-    switch (type) {
-      case 'repeat':
-        return Colors.blue;
-      case 'describe':
-        return Colors.orange;
-      case 'conversation':
-        return Colors.green;
-      default:
-        return AppColors.brownNormal;
-    }
-  }
+// Model classes
+class SpeakingExercise {
+  final int id;
+  final String instruction;
+  final String textToPractice;
+  final String? audioUrl;
+  final String? pronunciation;
 
-  String _getTaskTypeName(String type) {
-    switch (type) {
-      case 'repeat':
-        return 'Lặp lại';
-      case 'describe':
-        return 'Mô tả';
-      case 'conversation':
-        return 'Hội thoại';
-      default:
-        return 'Bài tập';
-    }
-  }
+  SpeakingExercise({
+    required this.id,
+    required this.instruction,
+    required this.textToPractice,
+    this.audioUrl,
+    this.pronunciation,
+  });
+}
+
+// Sample data generator
+List<SpeakingExercise> getSampleSpeakingExercises() {
+  return [
+    SpeakingExercise(
+      id: 1,
+      instruction:
+          'Hãy đọc to và rõ ràng từ vựng về động vật sau đây. Chú ý phát âm đúng từng từ.',
+      textToPractice: 'Cat, Dog, Bird, Fish, Elephant, Tiger, Lion, Monkey',
+    ),
+    SpeakingExercise(
+      id: 2,
+      instruction:
+          'Thực hành nói câu hoàn chỉnh về động vật. Hãy nói chậm và rõ ràng.',
+      textToPractice:
+          'I have a cute cat. The big elephant is gray. Birds can fly in the sky.',
+    ),
+    SpeakingExercise(
+      id: 3,
+      instruction:
+          'Mô tả động vật yêu thích của bạn. Sử dụng các tính từ để miêu tả.',
+      textToPractice:
+          'My favorite animal is a dog. It is friendly, loyal, and very playful.',
+    ),
+    SpeakingExercise(
+      id: 4,
+      instruction:
+          'Thực hành hội thoại về động vật. Hãy tưởng tượng bạn đang trò chuyện với bạn bè.',
+      textToPractice:
+          'What animals do you like? I like cats because they are cute and independent.',
+    ),
+  ];
 }

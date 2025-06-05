@@ -165,7 +165,7 @@ class LeftSidebar extends StatelessWidget {
           // TODO: Thêm route cho màn hình học bài
           break;
         case 'Hồ sơ':
-          // TODO: Thêm route cho màn hình hồ sơ  
+          Navigator.pushReplacementNamed(context, '/hoSo');
           break;
         case 'Cài đặt':
           // TODO: Thêm route cho màn hình cài đặt

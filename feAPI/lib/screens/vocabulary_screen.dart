@@ -77,7 +77,98 @@ class _VocabularyScreenState extends State<VocabularyScreen> with TickerProvider
       case 3:
         return 'assets/images/icon_chu_de_1.png';
       default:
-        return 'assets/images/default_icon.png';
+        return 'assets/images/default_icon.png';    }
+  }
+
+  // Helper method to generate speaking exercises based on lesson ID
+  List<SpeakingExercise> _generateSpeakingExercisesForLesson(int lessonId) {
+    switch (lessonId) {
+      case 5: // Animals
+        return [
+          SpeakingExercise(
+            id: 1,
+            instruction: 'Hãy đọc to và rõ ràng từ vựng về động vật sau đây. Chú ý phát âm đúng từng từ.',
+            textToPractice: 'Cat, Dog, Bird, Fish, Elephant, Tiger, Lion, Monkey',
+          ),
+          SpeakingExercise(
+            id: 2,
+            instruction: 'Thực hành nói câu hoàn chỉnh về động vật. Hãy nói chậm và rõ ràng.',
+            textToPractice: 'I have a cute cat. The big elephant is gray. Birds can fly in the sky.',
+          ),
+          SpeakingExercise(
+            id: 3,
+            instruction: 'Mô tả động vật yêu thích của bạn. Sử dụng các tính từ để miêu tả.',
+            textToPractice: 'My favorite animal is a dog. It is friendly, loyal, and very playful.',
+          ),
+        ];
+      case 6: // Food
+        return [
+          SpeakingExercise(
+            id: 1,
+            instruction: 'Thực hành từ vựng về thức ăn và đồ uống. Phát âm rõ ràng từng từ.',
+            textToPractice: 'Apple, Banana, Rice, Bread, Water, Coffee, Tea, Milk',
+          ),
+          SpeakingExercise(
+            id: 2,
+            instruction: 'Nói về món ăn yêu thích của bạn. Mô tả hương vị và cảm giác.',
+            textToPractice: 'I love pizza. It tastes delicious with cheese and tomato sauce.',
+          ),
+          SpeakingExercise(
+            id: 3,
+            instruction: 'Thực hành đặt món ăn tại nhà hàng. Hãy nói một cách lịch sự.',
+            textToPractice: 'I would like to order a hamburger and orange juice, please.',
+          ),
+        ];
+      case 7: // Travel
+        return [
+          SpeakingExercise(
+            id: 1,
+            instruction: 'Thực hành từ vựng về du lịch. Chú ý ngữ điệu và trọng âm.',
+            textToPractice: 'Airport, Hotel, Ticket, Passport, Suitcase, Train, Bus, Taxi',
+          ),
+          SpeakingExercise(
+            id: 2,
+            instruction: 'Hỏi đường khi đi du lịch. Luyện tập cách hỏi một cách lịch sự.',
+            textToPractice: 'Excuse me, could you tell me how to get to the train station?',
+          ),
+          SpeakingExercise(
+            id: 3,
+            instruction: 'Mô tả kế hoạch du lịch của bạn. Sử dụng thì tương lai.',
+            textToPractice: 'I will visit Paris next summer. I plan to see the Eiffel Tower.',
+          ),
+        ];
+      case 8: // Daily routine
+        return [
+          SpeakingExercise(
+            id: 1,
+            instruction: 'Nói về hoạt động hàng ngày. Sử dụng thì hiện tại đơn.',
+            textToPractice: 'I wake up at 7 AM. I brush my teeth and have breakfast.',
+          ),
+          SpeakingExercise(
+            id: 2,
+            instruction: 'Mô tả lịch trình làm việc của bạn. Chú ý cách phát âm số giờ.',
+            textToPractice: 'I start work at nine o\'clock and finish at five thirty.',
+          ),
+          SpeakingExercise(
+            id: 3,
+            instruction: 'Chia sẻ về sở thích của bạn. Thể hiện cảm xúc qua giọng nói.',
+            textToPractice: 'In my free time, I enjoy reading books and listening to music.',
+          ),
+        ];
+      default:
+        // Default exercises for any other lesson
+        return [
+          SpeakingExercise(
+            id: 1,
+            instruction: 'Thực hành phát âm cơ bản. Hãy nói chậm và rõ ràng.',
+            textToPractice: 'Hello, my name is... I am learning English.',
+          ),
+          SpeakingExercise(
+            id: 2,
+            instruction: 'Giới thiệu bản thân một cách đơn giản.',
+            textToPractice: 'Nice to meet you. I come from Vietnam. I like learning new things.',
+          ),
+        ];
     }
   }
 
@@ -327,26 +418,24 @@ class _VocabularyScreenState extends State<VocabularyScreen> with TickerProvider
                             : [],
                       ),
                       child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
+                        color: Colors.transparent,                        child: InkWell(
                           onTap: () async {
                             try {
-                              // Add your speaking practice navigation logic here
                               print('Starting speaking practice for lesson ${lesson.id}');
-                              /*
+                              
+                              // Generate speaking exercises based on lesson
+                              final exercises = _generateSpeakingExercisesForLesson(lesson.id);
+                              
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => SpeakingPracticeScreen(
-                                    speakingLesson: SpeakingLesson(
-                                      id: lesson.id,
-                                      title: lesson.title,
-                                      // Add other necessary parameters
-                                    ),
+                                    lessonTitle: lesson.title,
+                                    lessonId: lesson.id,
+                                    exercises: exercises,
                                   ),
                                 ),
                               );
-                              */
                             } catch (e) {
                               print('Lỗi khi khởi tạo bài luyện nói: $e');
                               ScaffoldMessenger.of(context).showSnackBar(
