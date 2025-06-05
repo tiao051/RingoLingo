@@ -6,6 +6,7 @@ import 'screens/vocabulary_screen.dart';
 import 'screens/tracnghiem_screen.dart';
 import 'screens/quiz_screen.dart';
 import 'screens/hoSo.dart';
+import 'screens/caidat.dart';
 import 'dart:html' as html;
 
 void main() {
@@ -37,6 +38,7 @@ class RingoLingoApp extends StatelessWidget {
         '/tracnghiem': (context) => TracNghiemScreen(),
         '/quiz': (context) => QuizScreen(),
         '/hoSo': (context) => HoSo(),
+        '/caidat': (context) => caidat(),
       },
     );
   }
