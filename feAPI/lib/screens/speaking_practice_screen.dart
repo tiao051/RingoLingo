@@ -1,8 +1,14 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:ringolingo_app/utils/color.dart';
 import 'package:ringolingo_app/utils/text_styles.dart';
 import 'dart:async';
 import 'dart:math';
+import 'package:record/record.dart';
+import 'dart:html' as html;
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class SpeakingPracticeScreen extends StatefulWidget {
   final String lessonTitle;
@@ -24,14 +30,12 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
     with TickerProviderStateMixin {
   // Animation Controllers
   late AnimationController _pulseController;
-  late AnimationController _waveController;
   late AnimationController _progressController;
   late AnimationController _slideController;
   late AnimationController _bounceController;
 
   // Animations
   late Animation<double> _pulseAnimation;
-  late Animation<double> _waveAnimation;
   late Animation<double> _progressAnimation;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _bounceAnimation;
@@ -49,22 +53,25 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
   // Audio visualization
   List<double> audioLevels = List.generate(30, (index) => 0.0);
   Timer? _audioLevelTimer;
+  final Record _recorder = Record();
+  String? _audioUrl; // Đường dẫn file ghi âm (web: blob url)
+
+  // Speech to text
+  late stt.SpeechToText _speech;
+  String _recognizedText = '';
+  String _backendResult = '';
 
   @override
   void initState() {
     super.initState();
     _initializeAnimations();
     _slideController.forward();
+    _speech = stt.SpeechToText();
   }
 
   void _initializeAnimations() {
     _pulseController = AnimationController(
       duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    );
-
-    _waveController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
 
@@ -87,10 +94,6 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
 
-    _waveAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _waveController, curve: Curves.linear),
-    );
-
     _progressAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _progressController, curve: Curves.easeOutCubic),
     );
@@ -107,91 +110,149 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
       CurvedAnimation(parent: _bounceController, curve: Curves.elasticOut),
     );
 
-    _waveController.repeat();
+    _pulseController.repeat(reverse: true);
   }
 
   @override
   void dispose() {
     _pulseController.dispose();
-    _waveController.dispose();
     _progressController.dispose();
     _slideController.dispose();
     _bounceController.dispose();
     _recordingTimer?.cancel();
     _playbackTimer?.cancel();
     _audioLevelTimer?.cancel();
+    _recorder.dispose();
     super.dispose();
   }
 
-  void _startRecording() {
-    setState(() {
-      isRecording = true;
-      recordingTime = 0.0;
-      hasRecorded = false;
-    });
-
-    _pulseController.repeat(reverse: true);
-    _startAudioVisualization();
-
-    _recordingTimer =
-        Timer.periodic(const Duration(milliseconds: 100), (timer) {
+  Future<void> _startRecording() async {
+    print('[DEBUG] _startRecording called');
+    if (await _recorder.hasPermission()) {
+      print('[DEBUG] Microphone permission granted');
       setState(() {
-        recordingTime += 0.1;
+        isRecording = true;
+        recordingTime = 0.0;
+        hasRecorded = false;
+        _audioUrl = null;
+        _recognizedText = '';
+      });
+      _pulseController.repeat(reverse: true);
+      _startAudioVisualization();
+      // Start speech recognition
+      bool available = await _speech.initialize(
+        onStatus: (status) => print('[DEBUG] Speech status: ' + status),
+        onError: (error) => print('[DEBUG] Speech error: ' + error.errorMsg),
+      );
+      if (available) {
+        _speech.listen(
+          onResult: (result) {
+            setState(() {
+              _recognizedText = result.recognizedWords;
+            });
+          },
+          listenMode: stt.ListenMode.dictation,
+          partialResults: true,
+          localeId: 'en_US', // hoặc 'vi_VN' nếu muốn nhận diện tiếng Việt
+        );
+      }
+      // Ghi âm thật
+      await _recorder.start(
+        encoder: AudioEncoder.opus, // dùng opus cho web/mobile
+        bitRate: 128000,
+        samplingRate: 44100,
+      );
+      print('[DEBUG] Recording started');
+      _recordingTimer =
+          Timer.periodic(const Duration(milliseconds: 100), (timer) async {
+        setState(() {
+          recordingTime += 0.1;
+        });
         if (recordingTime >= 30.0) {
-          // Max 30 seconds
-          _stopRecording();
+          await _stopRecording();
         }
       });
-    });
+    } else {
+      print('[DEBUG] Microphone permission denied');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Không có quyền truy cập microphone!')),
+      );
+    }
   }
 
-  void _stopRecording() {
+  Future<void> _stopRecording() async {
+    print('[DEBUG] _stopRecording called');
     setState(() {
       isRecording = false;
       hasRecorded = true;
     });
-
     _pulseController.stop();
     _pulseController.reset();
     _recordingTimer?.cancel();
     _audioLevelTimer?.cancel();
     _bounceController.forward();
-
-    // Reset audio levels
+    // Stop speech recognition
+    await _speech.stop();
+    // Lấy file ghi âm
+    final path = await _recorder.stop();
+    print('[DEBUG] Recording stopped, path: ' + (path ?? 'null'));
+    if (path != null) {
+      print(' vao day roi');
+      _audioUrl = path;
+      // Lấy dữ liệu blob audio ngay sau khi ghi xong
+      final audioData = await _getAudioBlobData();
+      print('[DEBUG] Audio blob data retrieved: $audioData');
+      if (audioData != null) {
+        print('[DEBUG] Audio blob size: \\${audioData.length} bytes');
+        await _uploadAudioToBackend(audioData);
+      } else {
+        print('[DEBUG] Không lấy được dữ liệu blob audio');
+      }
+    }
     setState(() {
       audioLevels = List.generate(30, (index) => 0.0);
     });
   }
 
-  void _startPlayback() {
-    if (!hasRecorded) return;
-
+  Future<void> _startPlayback() async {
+    print('[DEBUG] _startPlayback called');
+    if (!hasRecorded || _audioUrl == null) {
+      print('[DEBUG] No recording to play');
+      return;
+    }
     setState(() {
       isPlaying = true;
       playbackTime = 0.0;
     });
-
     _startAudioVisualization();
-
-    _playbackTimer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      setState(() {
-        playbackTime += 0.1;
+    // Phát lại trên web dùng AudioElement
+    if (_audioUrl != null) {
+      print('[DEBUG] Playing audio from url: ' + _audioUrl!);
+      final audio = html.AudioElement(_audioUrl!);
+      audio.onEnded.listen((event) {
+        print('[DEBUG] Audio playback ended');
+        _stopPlayback();
+      });
+      audio.play();
+      _playbackTimer =
+          Timer.periodic(const Duration(milliseconds: 100), (timer) {
+        setState(() {
+          playbackTime += 0.1;
+        });
         if (playbackTime >= recordingTime) {
+          print('[DEBUG] Playback timer reached recordingTime');
           _stopPlayback();
         }
       });
-    });
+    }
   }
 
   void _stopPlayback() {
     setState(() {
       isPlaying = false;
     });
-
     _playbackTimer?.cancel();
     _audioLevelTimer?.cancel();
-
-    // Reset audio levels
     setState(() {
       audioLevels = List.generate(30, (index) => 0.0);
     });
@@ -216,6 +277,7 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
         hasRecorded = false;
         recordingTime = 0.0;
         playbackTime = 0.0;
+        _audioUrl = null;
       });
 
       _progressController.forward();
@@ -233,6 +295,7 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
         hasRecorded = false;
         recordingTime = 0.0;
         playbackTime = 0.0;
+        _audioUrl = null;
       });
 
       _slideController.reset();
@@ -346,6 +409,75 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
         );
       },
     );
+  }
+
+  // Hàm này dùng để lấy blob từ blob url (web) để gửi lên backend
+  Future<Uint8List?> _getAudioBlobData() async {
+    print('[DEBUG] Bắt đầu lấy blob audio...');
+    if (_audioUrl != null && _audioUrl!.startsWith('blob:')) {
+      print('[DEBUG] _audioUrl hợp lệ: $_audioUrl');
+
+      try {
+        final xhr = html.HttpRequest();
+
+        print('[DEBUG] Tạo XMLHttpRequest xong, mở kết nối...');
+        xhr.open('GET', _audioUrl!);
+        xhr.responseType = 'arraybuffer';
+
+        print('[DEBUG] Gửi request...');
+        xhr.send();
+
+        print('[DEBUG] Đợi phản hồi load...');
+        await xhr.onLoadEnd.first;
+
+        print('[DEBUG] Đã load xong, kiểm tra status: ${xhr.status}');
+        if (xhr.status == 200 || xhr.status == 0) {
+          final buffer = xhr.response as ByteBuffer;
+          final result = buffer.asUint8List();
+          print(
+              '[✅] Lấy dữ liệu blob audio thành công, size: ${result.length}');
+          return result;
+        } else {
+          print('[❌] Lỗi status khi lấy blob: ${xhr.status}');
+        }
+      } catch (e) {
+        print('[❌] Exception khi lấy blob audio: $e');
+      }
+    } else {
+      print('[❌] _audioUrl null hoặc không phải blob URL: $_audioUrl');
+    }
+
+    return null;
+  }
+
+  Future<void> _uploadAudioToBackend(Uint8List audioData) async {
+    final formData = html.FormData();
+    final blob = html.Blob([audioData], 'audio/webm'); // đúng mime type
+    formData.appendBlob('file', blob, 'recording.webm'); // khớp key 'file'
+
+    try {
+      final request = await html.HttpRequest.request(
+        'http://127.0.0.1:5000/transcribe', // ✅ sửa endpoint đúng
+        method: 'POST',
+        sendData: formData,
+      );
+
+      print('[DEBUG] Backend response: [38;5;2m[1m[4m[3m[9m${request.responseText}[0m');
+      // Parse JSON và setState để hiển thị kết quả
+      try {
+  final json = request.responseText;
+  if (json != null && json.isNotEmpty) {
+    final decoded = jsonDecode(json); // dùng jsonDecode từ dart:convert
+    setState(() {
+      _backendResult = decoded['text']?.toString() ?? '';
+    });
+  }
+} catch (e) {
+  print('[DEBUG] Lỗi parse JSON backend: $e');
+}
+    } catch (e) {
+      print('[DEBUG] Upload error: $e');
+    }
   }
 
   @override
@@ -601,6 +733,50 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
                           ),
                           const SizedBox(height: 16),
                         ],
+                        if (_recognizedText.isNotEmpty) ...[
+                          Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(bottom: 16),
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.yellow.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.yellow.shade200),
+                            ),
+                            child: Text(
+                              _recognizedText,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    color: Colors.brown.shade800,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ),
+                        ],
+                        if (_backendResult.isNotEmpty) ...[
+                          Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(bottom: 16),
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.green.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.green.shade200),
+                            ),
+                            child: Text(
+                              _backendResult,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    color: Colors.green.shade800,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ),
+                        ],
 
                         // Recording controls
                         Container(
@@ -628,7 +804,8 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
 
                               // Control buttons
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   // Play button
                                   AnimatedOpacity(
@@ -669,7 +846,8 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
                                                   ? _stopPlayback
                                                   : _startPlayback)
                                               : null,
-                                          borderRadius: BorderRadius.circular(30),
+                                          borderRadius:
+                                              BorderRadius.circular(30),
                                           child: Icon(
                                             isPlaying
                                                 ? Icons.stop
@@ -712,7 +890,8 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
                                                         ? Colors.red
                                                         : Colors.green)
                                                     .withOpacity(0.4),
-                                                blurRadius: isRecording ? 20 : 15,
+                                                blurRadius:
+                                                    isRecording ? 20 : 15,
                                                 offset: const Offset(0, 6),
                                               ),
                                             ],
@@ -785,12 +964,14 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
                                                     hasRecorded = false;
                                                     recordingTime = 0.0;
                                                     playbackTime = 0.0;
+                                                    _audioUrl = null;
                                                     audioLevels = List.generate(
                                                         30, (index) => 0.0);
                                                   });
                                                 }
                                               : null,
-                                          borderRadius: BorderRadius.circular(30),
+                                          borderRadius:
+                                              BorderRadius.circular(30),
                                           child: const Icon(
                                             Icons.refresh,
                                             color: Colors.white,
@@ -820,8 +1001,8 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.grey.shade200,
                                     foregroundColor: Colors.grey.shade700,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 14),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 14),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     ),
@@ -865,17 +1046,17 @@ class _SpeakingPracticeScreenState extends State<SpeakingPracticeScreen>
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 14),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                       ),
                                     ),
                                   );
                                 },
                               ),
-                            ),
-                          ],
-                        ),
-                        
+                            ), // Đóng Expanded
+                          ], // Đóng Row
+                        ), // Đóng Column
                         // Add some bottom padding for better scrolling experience
                         const SizedBox(height: 40),
                       ],
