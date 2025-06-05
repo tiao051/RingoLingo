@@ -31,6 +31,9 @@ using Microsoft.IdentityModel.Tokens;
 using AppTiengAnhBE.Domain.Entities;
 using AppTiengAnhBE.Services.AuthServices;
 using AppTiengAnhBE.Services;
+using Hangfire;
+using Hangfire.MemoryStorage;
+using AppTiengAnhBE.Services.MailServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,6 +80,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 // API Documentation
 builder.Services.AddOpenApi();
+builder.Services.AddScoped<MailService>();
 
 // Repository registrations
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -99,6 +103,9 @@ builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IWordService, WordService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddHangfire(x => x.UseMemoryStorage()); // hoặc dùng SQL
+builder.Services.AddHangfireServer();
+
 //cors
 builder.Services.AddCors(options =>
 {
@@ -116,7 +123,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 })
-.AddCookie() 
+.AddCookie()
 .AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"] ?? "";
@@ -133,9 +140,10 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseHangfireServer();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
-app.UseAuthentication(); 
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

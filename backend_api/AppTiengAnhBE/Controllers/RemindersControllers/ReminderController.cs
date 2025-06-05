@@ -1,4 +1,6 @@
 ﻿using AppTiengAnhBE.Models;
+using AppTiengAnhBE.Models.DTOs.ReminderDTO;
+using AppTiengAnhBE.Services.MailServices;
 using AppTiengAnhBE.Services.RemindersCRUDServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +12,25 @@ namespace AppTiengAnhBE.Controllers.RemindersControllers
     public class ReminderController : ControllerBase
     {
         private readonly IReminderService _reminderService;
-        public ReminderController(IReminderService reminderService)
+        private readonly MailService _mailService;
+        public ReminderController(IReminderService reminderService, MailService mailService)
         {
             _reminderService = reminderService;
+            _mailService = mailService;
         }
 
+        //[HttpPost("remind")]
+        //public async Task<IActionResult> Remind(ReminderDTO dto)
+        //{
+        //    await _mailService.ScheduleReminderAsync(dto);
+        //    return Ok("Đã lên lịch gửi mail nhắc học.");
+        //}
+        [HttpPost("send-now")]
+        public async Task<IActionResult> SendNow([FromBody] ReminderDTO dto)
+        {
+            await _mailService.SendEmailImmediatelyAsync(dto.Email);
+            return Ok("Đã gửi mail ngay lập tức.");
+        }
         // POST: api/reminders
         [HttpPost]
         public async Task<IActionResult> CreateReminder([FromBody] Reminder reminder)

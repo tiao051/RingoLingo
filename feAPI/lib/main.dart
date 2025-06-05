@@ -4,7 +4,7 @@ import 'screens/home_page.dart';
 import 'screens/login.dart';
 import 'screens/vocabulary_screen.dart';
 import 'screens/tracnghiem_screen.dart';
-import 'screens/quiz_screen.dart';
+import 'screens/quiz_screen_tho.dart';
 import 'screens/hoSo.dart';
 import 'screens/caidat.dart';
 import 'dart:html' as html;
