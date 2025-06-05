@@ -85,7 +85,8 @@ class QuizCard extends StatelessWidget {
                     top: 12,
                     left: 12,
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
                         color: _getDifficultyColor(),
                         borderRadius: BorderRadius.circular(12),
@@ -111,7 +112,8 @@ class QuizCard extends StatelessWidget {
                     bottom: 12,
                     right: 12,
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
                         color: AppColors.black.withOpacity(0.7),
                         borderRadius: BorderRadius.circular(10),

@@ -17,15 +17,30 @@ namespace AppTiengAnhBE.Repositories.QuestionRepo
         public async Task<IEnumerable<QuestionDTO>> GetQuestionsByLessonAsync(int lessonId)
         {
             var sql = @"
+        WITH paged_questions AS (
             SELECT q.id, q.question AS QuestionText, qt.type_name AS TypeName
             FROM question q
             JOIN question_types qt ON q.question_type_id = qt.id
-            WHERE q.lesson_id = @LessonId;
+            WHERE q.lesson_id = @LessonId
+            ORDER BY q.id DESC
+            OFFSET 5
+            LIMIT 5
+        )
+        SELECT * FROM paged_questions
+        ORDER BY id;
 
-            SELECT qa.id, qa.question_id AS QuestionId, qa.answer_text AS AnswerText, qa.is_correct AS isCorrect
-            FROM question_answers qa
-            JOIN question q ON qa.question_id = q.id
-            WHERE q.lesson_id = @LessonId;";
+        SELECT qa.id, qa.question_id AS QuestionId, qa.answer_text AS AnswerText, qa.is_correct AS isCorrect
+        FROM question_answers qa
+        WHERE qa.question_id IN (
+            SELECT id FROM (
+                SELECT q.id
+                FROM question q
+                WHERE q.lesson_id = @LessonId
+                ORDER BY q.id DESC
+                OFFSET 5
+                LIMIT 5
+            ) AS filtered
+        );";
 
             using var multi = await _db.QueryMultipleAsync(sql, new { LessonId = lessonId });
 
@@ -37,16 +52,49 @@ namespace AppTiengAnhBE.Repositories.QuestionRepo
                 q.AnswersText = answers.Where(a => a.QuestionId == q.Id).ToList();
             }
 
-            Console.WriteLine($"Fetched {questions.Count} questions");
-            Console.WriteLine($"Fetched {answers.Count} answers");
+            return questions;
+        }
 
-            foreach (var a in answers)
+        public async Task<IEnumerable<QuestionDTO>> GetQuestionsForLisTestByLessonAsync(int lessonId)
+        {
+            var sql = @"
+    WITH latest_questions AS (
+        SELECT q.id, q.question AS QuestionText, qt.type_name AS TypeName
+        FROM question q
+        JOIN question_types qt ON q.question_type_id = qt.id
+        WHERE q.lesson_id = @LessonId
+        ORDER BY q.id DESC
+        LIMIT 5
+    )
+    SELECT * FROM latest_questions
+    ORDER BY id; -- sắp xếp lại theo thứ tự tăng dần nếu cần
+
+    SELECT qa.id, qa.question_id AS QuestionId, qa.answer_text AS AnswerText, qa.is_correct AS isCorrect
+    FROM question_answers qa
+    WHERE qa.question_id IN (
+        SELECT id FROM (
+            SELECT q.id
+            FROM question q
+            WHERE q.lesson_id = @LessonId
+            ORDER BY q.id DESC
+            LIMIT 5
+        ) AS filtered
+    );";
+
+            using var multi = await _db.QueryMultipleAsync(sql, new { LessonId = lessonId });
+
+            var questions = (await multi.ReadAsync<QuestionDTO>()).ToList();
+            var answers = (await multi.ReadAsync<AnswerDTO>()).ToList();
+
+            foreach (var q in questions)
             {
-                Console.WriteLine($"Answer ID: {a.Id}, QID: {a.QuestionId}, Text: {a.AnswerText}");
+                q.AnswersText = answers.Where(a => a.QuestionId == q.Id).ToList();
             }
 
             return questions;
         }
+
+
         public async Task<IEnumerable<QuestionDTO>> GetWrongQuestionsWithAnswersAsync(int userResultId)
         {
             // Lấy danh sách ID các câu sai

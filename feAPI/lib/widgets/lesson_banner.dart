@@ -45,7 +45,8 @@ class LessonBanner extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -55,7 +56,8 @@ class LessonBanner extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.arrow_forward_ios, size: 20, color: Colors.orange.shade700),
+            Icon(Icons.arrow_forward_ios,
+                size: 20, color: Colors.orange.shade700),
           ],
         ),
       ),

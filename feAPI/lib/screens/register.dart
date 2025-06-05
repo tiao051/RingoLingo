@@ -56,7 +56,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset('assets/images/title_logo.png', width: 50, height: 34),
+                        Image.asset('assets/images/title_logo.png',
+                            width: 50, height: 34),
                         const SizedBox(height: 20),
                         const Text(
                           'Đăng Ký',
@@ -72,9 +73,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(height: 10),
                         _buildInputField('Email', _emailController),
                         const SizedBox(height: 10),
-                        _buildInputField('Mật khẩu', _passwordController, isPassword: true),
+                        _buildInputField('Mật khẩu', _passwordController,
+                            isPassword: true),
                         const SizedBox(height: 10),
-                        _buildInputField('Xác nhận mật khẩu', _confirmPasswordController, isConfirmPassword: true),
+                        _buildInputField(
+                            'Xác nhận mật khẩu', _confirmPasswordController,
+                            isConfirmPassword: true),
                         const SizedBox(height: 20),
                         _buildRegisterButton(),
                         const SizedBox(height: 20),
@@ -183,7 +187,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 ? const SizedBox(
                     width: 24,
                     height: 24,
-                    child: CircularProgressIndicator(color: Color(0xFFF2E9DE), strokeWidth: 3),
+                    child: CircularProgressIndicator(
+                        color: Color(0xFFF2E9DE), strokeWidth: 3),
                   )
                 : const Text(
                     'Đăng ký',
@@ -240,96 +245,96 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _onRegisterTap() async {
-  final username = _usernameController.text.trim();
-  final email = _emailController.text.trim();
-  final password = _passwordController.text;
-  final confirmPassword = _confirmPasswordController.text;
+    final username = _usernameController.text.trim();
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+    final confirmPassword = _confirmPasswordController.text;
 
-  final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
-  final hasSpaceInPassword = password.contains(' ');
+    final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+    final hasSpaceInPassword = password.contains(' ');
 
-  // Kiểm tra từng trường xem có trống không
-  List<String> missingFields = [];
-  if (username.isEmpty) missingFields.add('username');
-  if (email.isEmpty) missingFields.add('email');
-  if (password.isEmpty) missingFields.add('password');
-  if (confirmPassword.isEmpty) missingFields.add('confirmPassword');
+    // Kiểm tra từng trường xem có trống không
+    List<String> missingFields = [];
+    if (username.isEmpty) missingFields.add('username');
+    if (email.isEmpty) missingFields.add('email');
+    if (password.isEmpty) missingFields.add('password');
+    if (confirmPassword.isEmpty) missingFields.add('confirmPassword');
 
-  // Kiểm tra yêu cầu riêng biệt theo thứ tự ưu tiên
-  if (missingFields.length > 1) {
-    _showFloatingMessage('Vui lòng nhập đầy đủ thông tin!');
-    return;
-  } else if (missingFields.length == 1) {
-    switch (missingFields.first) {
-      case 'username':
-        _showFloatingMessage('Vui lòng nhập tên đăng nhập!');
-        return;
-      case 'email':
-        _showFloatingMessage('Vui lòng nhập email!');
-        return;
-      case 'password':
-        _showFloatingMessage('Vui lòng nhập mật khẩu!');
-        return;
-      case 'confirmPassword':
-        _showFloatingMessage('Vui lòng xác nhận lại mật khẩu!');
-        return;
+    // Kiểm tra yêu cầu riêng biệt theo thứ tự ưu tiên
+    if (missingFields.length > 1) {
+      _showFloatingMessage('Vui lòng nhập đầy đủ thông tin!');
+      return;
+    } else if (missingFields.length == 1) {
+      switch (missingFields.first) {
+        case 'username':
+          _showFloatingMessage('Vui lòng nhập tên đăng nhập!');
+          return;
+        case 'email':
+          _showFloatingMessage('Vui lòng nhập email!');
+          return;
+        case 'password':
+          _showFloatingMessage('Vui lòng nhập mật khẩu!');
+          return;
+        case 'confirmPassword':
+          _showFloatingMessage('Vui lòng xác nhận lại mật khẩu!');
+          return;
+      }
     }
-  }
 
-  // Kiểm tra tên đăng nhập >= 4 ký tự
-  if (username.length < 4) {
-    _showFloatingMessage('Tên đăng nhập phải từ 4 ký tự trở lên');
-    return;
-  }
-
-  // Kiểm tra email hợp lệ
-  if (!emailRegex.hasMatch(email)) {
-    _showFloatingMessage('Email không hợp lệ');
-    return;
-  }
-
-  // Kiểm tra password không chứa dấu cách
-  if (hasSpaceInPassword) {
-    _showFloatingMessage('Mật khẩu không được chứa dấu cách');
-    return;
-  }
-
-  // Kiểm tra password và confirm password phải giống nhau
-  if (password != confirmPassword) {
-    _showFloatingMessage('Xác nhận mật khẩu không đúng');
-    return;
-  }
-
-  setState(() {
-    _isLoading = true;
-  });
-
-  try {
-    final response = await http.post(
-      Uri.parse('https://localhost:7093/api/signup/register'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'Username': username,
-        'Email': email,
-        'Password': password,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      _showFloatingMessage('Đăng ký thành công!', isError: false);
-      // Ví dụ chuyển sang trang đăng nhập
-      Navigator.of(context).pushNamed('/login');
-    } else {
-      _showFloatingMessage('Đăng ký thất bại!');
+    // Kiểm tra tên đăng nhập >= 4 ký tự
+    if (username.length < 4) {
+      _showFloatingMessage('Tên đăng nhập phải từ 4 ký tự trở lên');
+      return;
     }
-  } catch (e) {
-    _showFloatingMessage('Lỗi kết nối đến server');
-  } finally {
+
+    // Kiểm tra email hợp lệ
+    if (!emailRegex.hasMatch(email)) {
+      _showFloatingMessage('Email không hợp lệ');
+      return;
+    }
+
+    // Kiểm tra password không chứa dấu cách
+    if (hasSpaceInPassword) {
+      _showFloatingMessage('Mật khẩu không được chứa dấu cách');
+      return;
+    }
+
+    // Kiểm tra password và confirm password phải giống nhau
+    if (password != confirmPassword) {
+      _showFloatingMessage('Xác nhận mật khẩu không đúng');
+      return;
+    }
+
     setState(() {
-      _isLoading = false;
+      _isLoading = true;
     });
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://localhost:7093/api/signup/register'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'Username': username,
+          'Email': email,
+          'Password': password,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        _showFloatingMessage('Đăng ký thành công!', isError: false);
+        // Ví dụ chuyển sang trang đăng nhập
+        Navigator.of(context).pushNamed('/login');
+      } else {
+        _showFloatingMessage('Đăng ký thất bại!');
+      }
+    } catch (e) {
+      _showFloatingMessage('Lỗi kết nối đến server');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
-}
 
   void _showFloatingMessage(String message, {bool isError = true}) {
     final overlay = Overlay.of(context);

@@ -7,13 +7,34 @@ class RightSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Artist> artists = const [
-      Artist(imagePath: "assets/images/taoNgoiSao.png", displayName: "Lim Feng", username: "@limfeng__"),
-      Artist(imagePath: "assets/images/taoNgoiSao.png", displayName: "Mi Nga", username: "@lf.mingahaman"),
-      Artist(imagePath: "assets/images/taoNgoiSao.png", displayName: "MCK", username: "@rpt.mckeyyyyy"),
-      Artist(imagePath: "assets/images/taoNgoiSao.png", displayName: "tlinh", username: "@lf.tlinh"),
-      Artist(imagePath: "assets/images/taoNgoiSao.png", displayName: "wxrdie", username: "@wxrdie102"),
-      Artist(imagePath: "assets/images/taoNgoiSao.png", displayName: "Lâm Minh", username: "@lamiinh"),
-      Artist(imagePath: "assets/images/taoNgoiSao.png", displayName: "DEC AO", username: "@dec.ao"),
+      Artist(
+          imagePath: "assets/images/taoNgoiSao.png",
+          displayName: "Lim Feng",
+          username: "@limfeng__"),
+      Artist(
+          imagePath: "assets/images/taoNgoiSao.png",
+          displayName: "Mi Nga",
+          username: "@lf.mingahaman"),
+      Artist(
+          imagePath: "assets/images/taoNgoiSao.png",
+          displayName: "MCK",
+          username: "@rpt.mckeyyyyy"),
+      Artist(
+          imagePath: "assets/images/taoNgoiSao.png",
+          displayName: "tlinh",
+          username: "@lf.tlinh"),
+      Artist(
+          imagePath: "assets/images/taoNgoiSao.png",
+          displayName: "wxrdie",
+          username: "@wxrdie102"),
+      Artist(
+          imagePath: "assets/images/taoNgoiSao.png",
+          displayName: "Lâm Minh",
+          username: "@lamiinh"),
+      Artist(
+          imagePath: "assets/images/taoNgoiSao.png",
+          displayName: "DEC AO",
+          username: "@dec.ao"),
     ];
 
     return ClipRRect(
@@ -91,7 +112,8 @@ class RightSidebar extends StatelessWidget {
             Expanded(
               child: ListView.separated(
                 itemCount: artists.length,
-                separatorBuilder: (context, index) => const SizedBox(height: 14),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 14),
                 itemBuilder: (context, index) {
                   return _buildArtist(artists[index]);
                 },
@@ -99,37 +121,37 @@ class RightSidebar extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             // Phần hiển thị ảnh căn giữa
-           Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // tránh chiếm hết chiều dọc
-              children: [
-                Container(
-                  width: 300,  // độ dài thanh ngang nhỏ
-                  height: 4,  // độ dày thanh ngang
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade400,
-                    borderRadius: BorderRadius.circular(2),
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // tránh chiếm hết chiều dọc
+                children: [
+                  Container(
+                    width: 300, // độ dài thanh ngang nhỏ
+                    height: 4, // độ dày thanh ngang
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade400,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),  // khoảng cách giữa thanh ngang và ảnh
-                Image.asset(
-                  'assets/images/icon_rightbanner_2.png',
-                  width: 120,
-                ),
-                 const Text(
-                  'Cố lên, bạn đã đăng nhập được 3 ngày liên tiếp!',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Color.fromARGB(255, 109, 83, 49),
+                  const SizedBox(
+                      height: 8), // khoảng cách giữa thanh ngang và ảnh
+                  Image.asset(
+                    'assets/images/icon_rightbanner_2.png',
+                    width: 120,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+                  const Text(
+                    'Cố lên, bạn đã đăng nhập được 3 ngày liên tiếp!',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Color.fromARGB(255, 109, 83, 49),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
-          ),
-
           ],
         ),
       ),

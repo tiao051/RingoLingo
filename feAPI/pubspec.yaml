@@ -8,11 +8,15 @@ environment:
   flutter: ">=3.10.0"
 
 dependencies:
+  record: ^4.4.4
+  path_provider: ^2.0.15
+  permission_handler: ^10.4.3
   http: ^1.2.1
   audioplayers: ^5.2.1
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  speech_to_text: ^7.0.0
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +29,7 @@ flutter:
   assets:
     - assets/images/
     - assets/audio/
+    - assets/audio/speaking_animal.mp3
     - assets/images/dong_vat/
     - assets/images/thuc_an/
     - assets/images/gia_dinh/ # Khai báo toàn bộ thư mục assets

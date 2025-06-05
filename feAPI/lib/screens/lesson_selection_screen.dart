@@ -27,7 +27,8 @@ class _LessonSelectionScreenState extends State<LessonSelectionScreen> {
   @override
   void initState() {
     super.initState();
-    print('DEBUG: LessonSelectionScreen nhận category_id = \'${widget.category.id}\'');
+    print(
+        'DEBUG: LessonSelectionScreen nhận category_id = \'${widget.category.id}\'');
     futureLessons = fetchLessonsByCategory(widget.category.id);
   }
 
@@ -43,7 +44,7 @@ class _LessonSelectionScreenState extends State<LessonSelectionScreen> {
             /// LEFT SIDEBAR - 20%
             Expanded(
               flex: 2,
-              child: LeftSidebar(),
+              child: LeftSidebar(activeTab: 'Khóa học'),
             ),
 
             const SizedBox(width: 16),
@@ -84,7 +85,8 @@ class _LessonSelectionScreenState extends State<LessonSelectionScreen> {
                     FutureBuilder<List<Lesson>>(
                       future: futureLessons,
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
                           return Column(
@@ -94,7 +96,8 @@ class _LessonSelectionScreenState extends State<LessonSelectionScreen> {
                               ElevatedButton(
                                 onPressed: () {
                                   setState(() {
-                                    futureLessons = fetchLessonsByCategory(widget.category.id);
+                                    futureLessons = fetchLessonsByCategory(
+                                        widget.category.id);
                                   });
                                 },
                                 child: Text('Thử lại'),
@@ -120,12 +123,14 @@ class _LessonSelectionScreenState extends State<LessonSelectionScreen> {
                                 return LessonBanner(
                                   title: lesson.title,
                                   description: lesson.description,
-                                  imagePath: _getImageForCategory(widget.category.id),
+                                  imagePath:
+                                      _getImageForCategory(widget.category.id),
                                   onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => FlashcardLearningScreen(
+                                        builder: (context) =>
+                                            FlashcardLearningScreen(
                                           lesson: lesson,
                                           categoryName: widget.category.name,
                                         ),
@@ -155,7 +160,8 @@ class _LessonSelectionScreenState extends State<LessonSelectionScreen> {
                                     child: Image.asset(
                                       'assets/images/banner_letgo.png',
                                       fit: BoxFit.cover,
-                                      width: MediaQuery.of(context).size.width * 0.5,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.5,
                                     ),
                                   ),
                                 ),
